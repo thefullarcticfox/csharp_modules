@@ -92,6 +92,8 @@ try
 		throw new Exception("Input error. Check input data and retry.");
 
 	annuityPayment = GetAnnuityPayment(sum, term, rate);
+	// invalid for percent decrease recount if payment is bigger than debt left
+	// values below zero in table in this case
 	if (annuityPayment * (term - selectedMonth) < payment)
 		throw new Exception("Input error. Check input data and retry.");
 }
