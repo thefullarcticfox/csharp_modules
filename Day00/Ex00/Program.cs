@@ -71,7 +71,7 @@ static double GetOverpayAfterAddPayment(double remainingDebt, double annuityPaym
 
 // ----------------------------------------------------------------------------
 
-double sum, rate, payment;
+double sum, rate, payment, annuityPayment;
 int term, selectedMonth;
 
 // entry point: checking and validating arguments
@@ -90,6 +90,10 @@ try
 	if (rate < 0.0 || sum < 0.0 || term < 0 || payment < 0.0 ||
 	    selectedMonth < 0 || selectedMonth >= term)
 		throw new Exception("Input error. Check input data and retry.");
+
+	annuityPayment = GetAnnuityPayment(sum, term, rate);
+	if (annuityPayment * (term - selectedMonth) < payment)
+		throw new Exception("Input error. Check input data and retry.");
 }
 catch (Exception e)
 {
@@ -97,11 +101,9 @@ catch (Exception e)
 	return;
 }
 
-// counting formulas
-double annuityPayment = GetAnnuityPayment(sum, term, rate);
+var month = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 double overpay = -sum;
 double remainingSum = sum;
-var month = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 double percents;
 
 // table header
