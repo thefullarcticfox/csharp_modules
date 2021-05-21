@@ -25,7 +25,7 @@ string[] dictionary = File.OpenText(dictPath).ReadToEnd().
     Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
 Console.WriteLine("> Enter name:");
-string? name = Console.ReadLine();
+var name = Console.ReadLine();
 if (name == null)
     return;
 
@@ -51,8 +51,7 @@ foreach (string word in dictionary)
             case < 3:
             {
                 Console.WriteLine($">Did you mean “{closestName}”? Y/N");
-                string? response = Console.ReadLine();
-                if (response == "Y")
+				if (Console.ReadLine() == "Y")
                 {
                     name = closestName;
                     Console.WriteLine($">Hello, {name}!");
