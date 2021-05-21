@@ -1,66 +1,117 @@
 ﻿using System;
 using System.IO;
 
-static int LevDist(string a, string b)
+static int LevenshteinDistance(string a, string b)
 {
+    var distMatrix = new int[a.Length + 1, b.Length + 1];
     if (a.Length == 0)
-        return a.Length;
-    if (b.Length == 0)
         return b.Length;
+    if (b.Length == 0)
+        return a.Length;
 
-    int res0 = LevDist(a[1..], b[1..]);
-    if (char.ToLower(a[0]) == char.ToLower(b[0]))
-        return res0;
+    for (var i = 0; i <= a.Length; i++)
+        distMatrix[i, 0] = i;
+    for (var j = 0; j <= b.Length; j++)
+        distMatrix[0, j] = j;
 
-    int res1 = LevDist(a[1..], b);
-    int res2 = LevDist(a, b[1..]);
-    return 1 + Math.Min(res0, Math.Min(res1, res2));
+    for (var i = 1; i <= a.Length; i++)
+    {
+        for (var j = 1; j <= b.Length; j++)
+        {
+            int dist = char.ToLower(a[i - 1]) == char.ToLower(b[j - 1]) ? 0 : 1;
+            distMatrix[i, j] = Math.Min(distMatrix[i - 1, j - 1] + dist,
+                Math.Min(distMatrix[i - 1, j] + 1, distMatrix[i, j - 1] + 1));
+        }
+    }
+    return distMatrix[a.Length, b.Length];
+}
+
+static bool IsInvalidName(string name)
+{
+    foreach (char c in name)
+        if (!char.IsLetter(c) && c != '-' && c != ' ')
+            return true;
+    return false;
 }
 
 const string dictPath = "us.txt";
 if (!File.Exists(dictPath))
-    return;
-
-string[] dictionary = File.OpenText(dictPath).ReadToEnd().
-    Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-Console.WriteLine("> Enter name:");
-var name = Console.ReadLine();
-if (name == null)
-    return;
-
-var minLevDist = int.MaxValue;
-var closestName = "";
-foreach (string word in dictionary)
 {
-    int levDist = LevDist(name, word);
-    // Console.WriteLine($"{name} - {word} = {levDist}");
-    if (minLevDist == levDist && Math.Abs(word.Length - name.Length) < Math.Abs(closestName.Length - name.Length) ||
-        minLevDist > levDist)
-    {
-        minLevDist = levDist;
-        closestName = word;
+    Console.WriteLine($"Dictionary file {dictPath} not found.");
+    return;
+}
 
-        switch (minLevDist)
+// loading dictionary to memory
+string[] dictionary;
+try
+{
+    StreamReader dictionaryFile = File.OpenText(dictPath);
+    string plainDictionary = dictionaryFile.ReadToEnd();
+    dictionary = plainDictionary.Split(new[] {"\r\n", "\r", "\n"}, StringSplitOptions.RemoveEmptyEntries);
+    if (dictionary.Length == 0)
+        throw new Exception($"Dictionary file {dictPath} is empty.");
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+    return;
+}
+
+// user input begin
+Console.WriteLine("> Enter name:");
+string name = Console.ReadLine();
+
+// validations
+if (string.IsNullOrEmpty(name))
+{
+    Console.WriteLine("Your name was not found.");
+    return;
+}
+
+if (IsInvalidName(name))
+{
+    Console.WriteLine("Invalid name entered.");
+    return;
+}
+
+// counting Levenshtein distances for all words in dictionary
+var levDistances = new int[dictionary.Length];
+for (var i = 0; i < dictionary.Length; i++)
+    levDistances[i] = LevenshteinDistance(name, dictionary[i]);
+
+var found = false;
+for (var minLevDist = 0; minLevDist < 3 && !found; minLevDist++)
+{
+    for (var i = 0; i < dictionary.Length && !found; i++)
+    {
+        if (levDistances[i] != minLevDist)
+            continue;
+
+        string closestName = dictionary[i];
+        if (minLevDist == 0)
         {
-            case 0:
+            name = closestName;
+            found = true;
+            break;
+        }
+
+        Console.WriteLine($"> Did you mean “{closestName}”? Y/N");
+        while (true)
+        {
+            string reply = Console.ReadLine();
+            if (reply != null)
             {
-                Console.WriteLine($">Hello, {name}!");
-                return;
-            }
-            case < 3:
-            {
-                Console.WriteLine($">Did you mean “{closestName}”? Y/N");
-				if (Console.ReadLine() == "Y")
+                if (reply.ToUpper() == "Y")
                 {
                     name = closestName;
-                    Console.WriteLine($">Hello, {name}!");
-                    return;
+                    found = true;
+                    break;
                 }
-                break;
+                if (reply.ToUpper() == "N")
+                    break;
             }
         }
     }
 }
 
-Console.WriteLine("Name not found");
+Console.WriteLine(found ? $"Hello, {name}!" : "Your name was not found.");
