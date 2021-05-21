@@ -26,7 +26,7 @@ static double GetOverpayAfterAddPayment(double remainingDebt, double annuityPaym
 	double percents, int term, DateTime month, bool recountPercent = false)
 {
 	var overpay = 0.0;
-	var debtPaymentPart = 0.0;
+	double debtPaymentPart;
 
 	if (recountPercent)	// we need to recount percent after annuityPayment in this month with specific output
 	{
@@ -102,7 +102,7 @@ double annuityPayment = GetAnnuityPayment(sum, term, rate);
 double overpay = -sum;
 double remainingSum = sum;
 var month = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-var percents = 0.0;
+double percents;
 
 // table header
 Console.WriteLine("| {0,10} | {1,16} | {2,16} | {3,16} | {4,16} |",
