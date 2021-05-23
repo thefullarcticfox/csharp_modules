@@ -34,14 +34,8 @@ static bool IsInvalidName(string name)
     return false;
 }
 
-const string dictPath = "us.txt";
-if (!File.Exists(dictPath))
-{
-    Console.WriteLine($"Dictionary file {dictPath} not found.");
-    return;
-}
-
 // loading dictionary to memory
+const string dictPath = "us.txt";
 string[] dictionary;
 try
 {
