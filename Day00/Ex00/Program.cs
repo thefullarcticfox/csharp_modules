@@ -11,12 +11,12 @@ static double GetAnnuityPayment(double remainingDebt, int term, double yearlyRat
 {
 	double	monthlyRate = GetMonthlyRate(yearlyRate);
 	double monthlyRatePowByTerm = Math.Pow(1.0 + monthlyRate, term);
-	return (remainingDebt * monthlyRate * monthlyRatePowByTerm) / (monthlyRatePowByTerm - 1.0);
+	return remainingDebt * monthlyRate * monthlyRatePowByTerm / (monthlyRatePowByTerm - 1.0);
 }
 
 static int GetMonthsRecount(double payment, double yearlyRate, double remainingDebt)
 {
-	double	monthlyRate = GetMonthlyRate(yearlyRate);
+	double monthlyRate = GetMonthlyRate(yearlyRate);
 	double quotent = payment - monthlyRate * remainingDebt;
 	return (int)Math.Round(Math.Log(payment / quotent, 1.0 + monthlyRate));
 }
