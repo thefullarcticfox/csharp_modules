@@ -2,10 +2,8 @@
 
 static void SeparateOutput() => Console.WriteLine(new string('-', 90));
 
-static void PrintTableRow(DateTime month, double annuityPayment,
-	double debtPaymentPart, double percents, double remainingDebt) =>
-	Console.WriteLine("| {0:dd.MM.yyyy} | {1,16:N2} | {2,16:N2} | {3,16:N2} | {4,16:N2} |",
-		month, annuityPayment, debtPaymentPart, percents, remainingDebt);
+static void PrintTableRow(DateTime month, double annuityPay, double debtPay, double percents, double remainingDebt) =>
+	Console.WriteLine($"| {month:dd.MM.yyyy} | {annuityPay,16:N2} | {debtPay,16:N2} | {percents,16:N2} | {remainingDebt,16:N2} |");
 
 static double GetMonthlyRate(double yearlyRate) => yearlyRate / 12 / 100;
 
