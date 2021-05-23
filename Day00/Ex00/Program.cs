@@ -72,16 +72,13 @@ static double GetOverpayAfterAddPayment(double remainingDebt, double annuityPaym
 
 // ----------------------------------------------------------------------------
 
-double sum, rate, payment, annuityPayment;
-int term, selectedMonth;
-
 // entry point: checking and validating arguments (TryParse is faster)
 if (args.Length < 5 ||
-	!(double.TryParse(args[0], out sum) &&
-	double.TryParse(args[1], out rate) &&
-	int.TryParse(args[2], out term) &&
-	int.TryParse(args[3], out selectedMonth) &&
-	double.TryParse(args[4], out payment)) ||
+	!(double.TryParse(args[0], out double sum) &&
+	double.TryParse(args[1], out double rate) &&
+	int.TryParse(args[2], out int term) &&
+	int.TryParse(args[3], out int selectedMonth) &&
+	double.TryParse(args[4], out double payment)) ||
 	rate < 0.0 || sum < 0.0 || term < 0 || payment < 0.0 ||
 	selectedMonth < 0 || selectedMonth >= term)
 {
@@ -89,7 +86,7 @@ if (args.Length < 5 ||
 	return;
 }
 
-annuityPayment = GetAnnuityPayment(sum, term, rate);
+double annuityPayment = GetAnnuityPayment(sum, term, rate);
 // invalid for percent decrease recount if payment is bigger than debt left
 // values below zero in table in this case
 if (annuityPayment * (term - selectedMonth) < payment)
