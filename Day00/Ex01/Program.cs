@@ -45,9 +45,7 @@ if (!File.Exists(dictPath))
 string[] dictionary;
 try
 {
-    StreamReader dictionaryFile = File.OpenText(dictPath);
-    string plainDictionary = dictionaryFile.ReadToEnd();
-    dictionary = plainDictionary.Split(new[] {"\r\n", "\r", "\n"}, StringSplitOptions.RemoveEmptyEntries);
+    dictionary = File.ReadAllLines(dictPath);
     if (dictionary.Length == 0)
         throw new Exception($"Dictionary file {dictPath} is empty.");
 }

@@ -2,6 +2,11 @@
 
 static void SeparateOutput() => Console.WriteLine(new string('-', 90));
 
+static void PrintTableRow(DateTime month, double annuityPayment,
+	double debtPaymentPart, double percents, double remainingDebt) =>
+	Console.WriteLine("| {0:dd.MM.yyyy} | {1,16:N2} | {2,16:N2} | {3,16:N2} | {4,16:N2} |",
+		month, annuityPayment, debtPaymentPart, percents, remainingDebt);
+
 static double GetMonthlyRate(double yearlyRate) => yearlyRate / 12 / 100;
 
 static double GetAnnuityPayment(double remainingDebt, int term, double yearlyRate)
@@ -35,8 +40,7 @@ static double GetOverpayAfterAddPayment(double remainingDebt, double annuityPaym
 		month = month.AddMonths(1);
 		double nextAnnuityPayment = GetAnnuityPayment(remainingDebt, term - 1, rate);
 		double nextPercent = GetPercents(remainingDebt, rate, month);
-		Console.WriteLine("| {0:dd.MM.yyyy} | {1,16:N2} | {2,16:N2} | {3,16:N2} | {4,16:N2} |",
-			month, nextAnnuityPayment, debtPaymentPart, percents, remainingDebt);
+		PrintTableRow(month, nextAnnuityPayment, debtPaymentPart, percents, remainingDebt);
 		overpay += annuityPayment;
 		annuityPayment = nextAnnuityPayment;
 		percents = nextPercent;
@@ -61,8 +65,7 @@ static double GetOverpayAfterAddPayment(double remainingDebt, double annuityPaym
 		if (remainingDebt < 0)
 			remainingDebt = 0.0;
 
-		Console.WriteLine("| {0:dd.MM.yyyy} | {1,16:N2} | {2,16:N2} | {3,16:N2} | {4,16:N2} |",
-			month, annuityPayment, debtPaymentPart, percents, remainingDebt);
+		PrintTableRow(month, annuityPayment, debtPaymentPart, percents, remainingDebt);
 		percents = GetPercents(remainingDebt, rate, month);
 	}
 
@@ -74,32 +77,26 @@ static double GetOverpayAfterAddPayment(double remainingDebt, double annuityPaym
 double sum, rate, payment, annuityPayment;
 int term, selectedMonth;
 
-// entry point: checking and validating arguments
-try
+// entry point: checking and validating arguments (TryParse is faster)
+if (args.Length < 5 ||
+	!(double.TryParse(args[0], out sum) &&
+	double.TryParse(args[1], out rate) &&
+	int.TryParse(args[2], out term) &&
+	int.TryParse(args[3], out selectedMonth) &&
+	double.TryParse(args[4], out payment)) ||
+	rate < 0.0 || sum < 0.0 || term < 0 || payment < 0.0 ||
+	selectedMonth < 0 || selectedMonth >= term)
 {
-	if (args.Length < 5)
-		throw new Exception("Input error. Check input data and retry.");
-
-	sum = double.Parse(args[0]);
-	rate = double.Parse(args[1]);
-	term = int.Parse(args[2]);
-	selectedMonth = int.Parse(args[3]);
-	payment = double.Parse(args[4]);
-
-	// validating input
-	if (rate < 0.0 || sum < 0.0 || term < 0 || payment < 0.0 ||
-	    selectedMonth < 0 || selectedMonth >= term)
-		throw new Exception("Input error. Check input data and retry.");
-
-	annuityPayment = GetAnnuityPayment(sum, term, rate);
-	// invalid for percent decrease recount if payment is bigger than debt left
-	// values below zero in table in this case
-	if (annuityPayment * (term - selectedMonth) < payment)
-		throw new Exception("Input error. Check input data and retry.");
+	Console.WriteLine("Input error. Check input data and retry.");
+	return;
 }
-catch (Exception e)
+
+annuityPayment = GetAnnuityPayment(sum, term, rate);
+// invalid for percent decrease recount if payment is bigger than debt left
+// values below zero in table in this case
+if (annuityPayment * (term - selectedMonth) < payment)
 {
-	Console.WriteLine(e.Message);
+	Console.WriteLine("Input error. Check input data and retry.");
 	return;
 }
 
@@ -112,8 +109,7 @@ double percents;
 Console.WriteLine("| {0,10} | {1,16} | {2,16} | {3,16} | {4,16} |",
 	"Date", "Payment", "Debt part", "Percents", "Remaining Debt");
 SeparateOutput();
-Console.WriteLine("| {0:dd.MM.yyyy} | {1,16:N2} | {2,16:N2} | {3,16:N2} | {4,16:N2} |",
-	month, annuityPayment, sum, annuityPayment * term - sum, remainingSum);
+PrintTableRow(month, annuityPayment, sum, annuityPayment * term - sum, remainingSum);
 SeparateOutput();
 
 // first percents
@@ -128,15 +124,14 @@ for (var i = 1; i < selectedMonth; i++)
 	if (remainingSum < 0)
 		remainingSum = 0;
 
-	Console.WriteLine("| {0:dd.MM.yyyy} | {1,16:N2} | {2,16:N2} | {3,16:N2} | {4,16:N2} |",
-		month, annuityPayment, debtPaymentPart, percents, remainingSum);
+	PrintTableRow(month, annuityPayment, debtPaymentPart, percents, remainingSum);
 	percents = GetPercents(remainingSum, rate, month);
 	--term;
 }
 
 // test related default overpay after selected month
-double overpayDefault = GetOverpayAfterAddPayment(remainingSum,
-	annuityPayment, rate, percents, term, month) + overpay;
+// double overpayDefault = GetOverpayAfterAddPayment(remainingSum,
+// 	annuityPayment, rate, percents, term, month) + overpay;
 SeparateOutput();
 
 // additional payment
@@ -156,13 +151,13 @@ SeparateOutput();
 
 // output
 // Console.WriteLine("Overpay without any decrease:\t{0:N2} rubles", overpayDefault);
-Console.WriteLine("Overpay on payment decrease:\t{0:N2} rubles", overpayAfterPercentDecrease);
-Console.WriteLine("Overpay on term decrease:\t{0:N2} rubles", overpayAfterTermDecrease);
+Console.WriteLine($"Overpay on payment decrease:\t{overpayAfterPercentDecrease:N2} rubles");
+Console.WriteLine($"Overpay on term decrease:\t{overpayAfterTermDecrease:N2} rubles");
 
 double diff = Math.Abs(overpayAfterPercentDecrease - overpayAfterTermDecrease);
 if (diff < 1.0)
 	Console.WriteLine("Overpay is the same.");
 else if (overpayAfterPercentDecrease < overpayAfterTermDecrease)
-	Console.WriteLine("Percent decrease is better than term decrease by {0:N2} rubles", diff);
+	Console.WriteLine($"Percent decrease is better than term decrease by {diff:N2} rubles");
 else
-	Console.WriteLine("Term decrease is better than percent decrease by {0:N2} rubles", diff);
+	Console.WriteLine($"Term decrease is better than percent decrease by {diff:N2} rubles");
