@@ -66,13 +66,21 @@ if (IsInvalidName(name))
     return;
 }
 
+var found = false;
 // counting Levenshtein distances for all words in dictionary
 var levDistances = new int[dictionary.Length];
 for (var i = 0; i < dictionary.Length; i++)
+{
     levDistances[i] = LevenshteinDistance(name, dictionary[i]);
+    if (levDistances[i] == 0)
+    {
+        name = dictionary[i];
+        found = true;
+        break;
+    }
+}
 
-var found = false;
-for (var minLevDist = 0; minLevDist < 3 && !found; minLevDist++)
+for (var minLevDist = 1; minLevDist < 3 && !found; minLevDist++)
 {
     for (var i = 0; i < dictionary.Length && !found; i++)
     {
