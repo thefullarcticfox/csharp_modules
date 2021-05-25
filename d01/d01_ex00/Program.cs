@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using d01_ex00;
 using d01_ex00.Models;
 
@@ -17,6 +18,14 @@ try
 {
     sumToExchange = new ExchangeSum(sum);
     exchanger = new Exchanger(ratesDirectory);
+
+    // output
+    IEnumerable<ExchangeSum> result = exchanger.Exchange(sumToExchange);
+    Console.WriteLine($"Sum in original currency: {sumToExchange.ToString()}");
+    foreach (ExchangeSum exchanged in result)
+    {
+        Console.WriteLine($"Sum in {exchanged.Currency}: {exchanged.ToString()}");
+    }
 }
 catch (Exception e)
 {
@@ -24,10 +33,3 @@ catch (Exception e)
     return;
 }
 
-// foreach (ExchangeRate rate in exchanger.GetExchangeRates())
-//     Console.WriteLine(rate.ToString());
-
-// output
-Console.WriteLine($"Sum in original currency: {sumToExchange.ToString()}");
-foreach (ExchangeSum exchanged in exchanger.ExchangeToCurrencies(sumToExchange))
-    Console.WriteLine($"Sum in {exchanged.Curr.ToString()}: {exchanged.ToString()}");

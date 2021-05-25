@@ -2,29 +2,30 @@
 
 namespace d01_ex00.Models
 {
-    internal struct ExchangeSum
+    internal readonly struct ExchangeSum
     {
-        public Currency Curr;
-        public double Sum;
+        public readonly string Currency;
+        public readonly double Sum;
 
-        // from string in format SUM CURRENCY_ID
+        // data constructor
+        public ExchangeSum(double sum, string currency)
+        {
+            Sum = sum;
+            Currency = currency;
+        }
+
+        /* parsing constructor:
+         * sum is a pair "{sum} {currency}" where:
+         * - currency is "EUR", "RUB" or "USD"
+         * - sum is a floating point number */
         public ExchangeSum(string sum)
         {
             string[] sumSplit = sum.Split(' ');
-            if (sumSplit.Length < 2 || !double.TryParse(sumSplit[0], out Sum) ||
-                !Enum.TryParse(sumSplit[1], true, out Curr))
+            if (sumSplit.Length < 2 || !double.TryParse(sumSplit[0].Replace(',', '.'), out Sum))
                 throw new ArgumentException("Input error. Check input data and try again.");
+            Currency = sumSplit[1].ToUpper();
         }
 
-        public ExchangeSum(double sum, Currency curr)
-        {
-            Sum = sum;
-            Curr = curr;
-        }
-
-        public override string ToString()
-        {
-            return $"{Sum:N2} {Curr.ToString().ToUpper()}";
-        }
+        public override string ToString() => $"{Sum:N2} {Currency}";
     }
 }

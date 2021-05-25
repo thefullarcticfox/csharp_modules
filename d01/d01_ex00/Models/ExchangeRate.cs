@@ -2,31 +2,34 @@
 
 namespace d01_ex00.Models
 {
-    internal struct ExchangeRate
+    internal readonly struct ExchangeRate
     {
-        public Currency FromCurrency;
-        public Currency ToCurrency;
-        public double Rate;
+        public readonly string FromCurrency;
+        public readonly string ToCurrency;
+        public readonly double Rate;
 
-        public ExchangeRate(string fromCurCode, string toCurCodeRatePair)
+        // data constructor
+        public ExchangeRate(string fromCurrency, string toCurrency, double rate)
         {
-            string[] codeRate = toCurCodeRatePair.Split(':');
-            if (codeRate.Length < 2 || !Enum.TryParse(fromCurCode, true, out FromCurrency) ||
-                !Enum.TryParse(codeRate[0], true, out ToCurrency) ||
-                !double.TryParse(codeRate[1].Replace(',', '.'), out Rate))
-                throw new ArgumentException("Input error. Check input data and try again.");
-        }
-
-        public ExchangeRate(Currency fromCur, Currency toCurrency, double rate)
-        {
-            this.FromCurrency = fromCur;
+            FromCurrency = fromCurrency;
             ToCurrency = toCurrency;
             Rate = rate;
         }
 
-        public override string ToString()
+        /* parsing constructor:
+         * fromCurCode is "EUR", "RUB" or "USD"
+         * toCurCodeRatePair is a pair "{toCurrency}:{rate}" where:
+         * - toCurrency is "EUR", "RUB" or "USD"
+         * - rate is a floating point number */
+        public ExchangeRate(string fromCurCode, string toCurCodeRatePair)
         {
-            return $"{FromCurrency.ToString().ToUpper()} to {ToCurrency.ToString().ToUpper()} is {Rate}";
+            string[] codeRate = toCurCodeRatePair.Split(':');
+            if (codeRate.Length < 2 || !double.TryParse(codeRate[1].Replace(',', '.'), out Rate))
+                throw new ArgumentException("Input error. Check input data and try again.");
+            FromCurrency = fromCurCode.ToUpper();
+            ToCurrency = codeRate[0].ToUpper();
         }
+
+        public override string ToString() => $"{FromCurrency} to {ToCurrency} is {Rate}";
     }
 }
