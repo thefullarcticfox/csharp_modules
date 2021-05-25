@@ -2,7 +2,7 @@
 
 namespace d01_ex00.Models
 {
-    internal readonly struct ExchangeRate
+    public readonly struct ExchangeRate
     {
         public readonly string FromCurrency;
         public readonly string ToCurrency;

@@ -2,7 +2,7 @@
 
 namespace d01_ex00.Models
 {
-    internal readonly struct ExchangeSum
+    public readonly struct ExchangeSum
     {
         public readonly string Currency;
         public readonly double Sum;

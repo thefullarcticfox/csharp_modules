@@ -12,12 +12,10 @@ if (args.Length < 2)
 string sum = args[0];
 string ratesDirectory = args[1];
 
-ExchangeSum sumToExchange;
-Exchanger exchanger;
 try
 {
-    sumToExchange = new ExchangeSum(sum);
-    exchanger = new Exchanger(ratesDirectory);
+    var sumToExchange = new ExchangeSum(sum);
+    var exchanger = new Exchanger(ratesDirectory);
 
     // output
     IEnumerable<ExchangeSum> result = exchanger.Exchange(sumToExchange);
@@ -30,6 +28,4 @@ try
 catch (Exception e)
 {
     Console.WriteLine(e.Message);
-    return;
 }
-

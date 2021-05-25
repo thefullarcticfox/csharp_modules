@@ -5,7 +5,7 @@ using d01_ex00.Models;
 
 namespace d01_ex00
 {
-    internal class Exchanger
+    public class Exchanger
     {
         private readonly List<string> _knownCurrencies;
         private readonly List<ExchangeRate> _rates;
