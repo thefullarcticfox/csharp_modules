@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Collections.Generic;
 using d01_ex00.Models;
 
@@ -30,5 +29,12 @@ namespace d01_ex00
         }
 
         public IEnumerable<ExchangeRate> GetExchangeRates() => _rates;
+
+        public IEnumerable<ExchangeSum> ExchangeToCurrencies(ExchangeSum sum)
+        {
+            foreach (ExchangeRate rate in _rates)
+                if (sum.Curr == rate.FromCurrency)
+                    yield return new ExchangeSum(sum.Sum * rate.Rate, rate.ToCurrency);
+        }
     }
 }

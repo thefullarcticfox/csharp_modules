@@ -4,9 +4,9 @@ namespace d01_ex00.Models
 {
     internal struct ExchangeRate
     {
-        Currency FromCurrency;
-        Currency ToCurrency;
-        double Rate;
+        public Currency FromCurrency;
+        public Currency ToCurrency;
+        public double Rate;
 
         public ExchangeRate(string fromCurCode, string toCurCodeRatePair)
         {

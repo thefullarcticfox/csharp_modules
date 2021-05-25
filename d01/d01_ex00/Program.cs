@@ -11,12 +11,11 @@ if (args.Length < 2)
 string sum = args[0];
 string ratesDirectory = args[1];
 
-var exchangeSum = new ExchangeSum(sum);
-Console.WriteLine(exchangeSum.ToString());
-
+ExchangeSum sumToExchange;
 Exchanger exchanger;
 try
 {
+    sumToExchange = new ExchangeSum(sum);
     exchanger = new Exchanger(ratesDirectory);
 }
 catch (Exception e)
@@ -25,7 +24,10 @@ catch (Exception e)
     return;
 }
 
-foreach (ExchangeRate rate in exchanger.GetExchangeRates())
-{
-    Console.WriteLine(rate.ToString());
-}
+// foreach (ExchangeRate rate in exchanger.GetExchangeRates())
+//     Console.WriteLine(rate.ToString());
+
+// output
+Console.WriteLine($"Sum in original currency: {sumToExchange.ToString()}");
+foreach (ExchangeSum exchanged in exchanger.ExchangeToCurrencies(sumToExchange))
+    Console.WriteLine($"Sum in {exchanged.Curr.ToString()}: {exchanged.ToString()}");
