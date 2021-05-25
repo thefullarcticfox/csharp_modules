@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 static int LevenshteinDistance(string a, string b)
 {
@@ -24,14 +25,6 @@ static int LevenshteinDistance(string a, string b)
         }
     }
     return distMatrix[a.Length, b.Length];
-}
-
-static bool IsInvalidName(string name)
-{
-    foreach (char c in name)
-        if (!char.IsLetter(c) && c != '-' && c != ' ')
-            return true;
-    return false;
 }
 
 // loading dictionary to memory
@@ -60,7 +53,7 @@ if (string.IsNullOrEmpty(name))
     return;
 }
 
-if (IsInvalidName(name))
+if (Regex.Match(name, @"[^A-Za-z\p{IsCyrillic} \-]").Success)
 {
     Console.WriteLine("Invalid name entered.");
     return;
