@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 
 namespace d01_ex01.Tasks
@@ -5,20 +6,20 @@ namespace d01_ex01.Tasks
     public struct Task
     {
         private string _title;
-        private string _description;
-        private DateTime _deadline;
+        private string? _description;
+        private DateTime? _dueDate;
         private TaskPriority _priority;
         private TaskType _type;
         private TaskState _state;
 
-        public Task(string title, string description, DateTime deadline, TaskPriority priority, TaskType type)
+        public Task(string title, string description, DateTime dueDate, TaskPriority priority, TaskType type)
         {
             _title = title;
             _description = description;
-            _deadline = deadline;
+            _dueDate = dueDate;
             _priority = priority;
             _type = type;
-            _state = TaskState.Created;
+            _state = TaskState.New;
         }
     };
 }
