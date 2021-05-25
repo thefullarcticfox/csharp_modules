@@ -8,13 +8,14 @@ namespace d01_ex01.Tasks
     public class Task
     {
         public string Title { get; }
-        public TaskPriority Priority { get; }
         public TaskType Type { get; }
+        public TaskPriority Priority { get; private set; }
         public DateTime? DueDate { get; private set; }
         public string? Summary { get; private set; }
         public List<Event> History { get; }
 
-        public Task(string title, TaskPriority priority, TaskType type, DateTime? dueDate = null, string? summary = null)
+        public Task(string title, TaskType type, TaskPriority priority = TaskPriority.Normal,
+            DateTime? dueDate = null, string? summary = null)
         {
             Title = title;
             Summary = summary;
@@ -48,9 +49,7 @@ namespace d01_ex01.Tasks
         {
             string res = $"- {Title}\n" +
                          $"[{Type.ToString()}] [{GetState().ToString()}]\n" +
-                         $"Priority: {Priority.ToString()}";
-            if (DueDate != null)
-                res += $", Due till {DueDate:d}";
+                         $"Priority: {Priority.ToString()}, Due till {DueDate:d}";
             if (!string.IsNullOrEmpty(Summary))
                 res += $"\n{Summary}";
             return res;
@@ -74,15 +73,14 @@ namespace d01_ex01.Tasks
             if (!Enum.TryParse(typeStr, true, out TaskType type))
                 throw new ArgumentException("Input error. Check input data and try again.");
 
-            Console.WriteLine("Enter priority [Low, Normal, High]");
-            string? priorityStr = Console.ReadLine();
-            if (!Enum.TryParse(priorityStr, true, out TaskPriority priority))
-                throw new ArgumentException("Input error. Check input data and try again.");
-
             // creating task
-            var result = new Task(title, priority, type);
+            var result = new Task(title, type);
 
             // optional parameters
+            Console.WriteLine("Enter priority [Low, Normal, High]");
+            string? priorityStr = Console.ReadLine();
+            if (Enum.TryParse(priorityStr, true, out TaskPriority priority))
+                result.Priority = priority;
             if (DateTime.TryParse(dueDateStr, out DateTime dueDate))
                 result.DueDate = dueDate;
             if (!string.IsNullOrEmpty(summary))

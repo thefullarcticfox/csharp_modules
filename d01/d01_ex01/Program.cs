@@ -10,12 +10,14 @@ void AddTask()
     try
     {
         tasks.Add(Task.CreateTask());
+        Console.WriteLine();
         Console.WriteLine(tasks[^1].ToString());
     }
     catch (ArgumentException e)
     {
         Console.WriteLine(e.Message);
     }
+    Console.WriteLine();
 }
 
 void ListTasks()
@@ -24,7 +26,10 @@ void ListTasks()
         Console.WriteLine("Task list is empty.");
     else
         foreach (Task task in tasks)
+        {
             Console.WriteLine(task.ToString());
+            Console.WriteLine();
+        }
 }
 
 void SetTaskState(string state)
@@ -41,11 +46,12 @@ void SetTaskState(string state)
         else
             todo.SetWontDo();
     }
+    Console.WriteLine();
 }
 
 while (true)
 {
-    Console.Write("\nEnter your command [add, list, done, wontdo, quit]: ");
+    Console.Write("Enter your command [add, list, done, wontdo, quit]: ");
     string? cmd = Console.ReadLine();
     if (cmd == "add")
         AddTask();
