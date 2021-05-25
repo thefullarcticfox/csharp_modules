@@ -1,25 +1,95 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
+using d01_ex01.Events;
 
 namespace d01_ex01.Tasks
 {
-    public struct Task
+    public class Task
     {
-        private string _title;
-        private string? _description;
-        private DateTime? _dueDate;
-        private TaskPriority _priority;
-        private TaskType _type;
-        private TaskState _state;
+        public string Title { get; }
+        public TaskPriority Priority { get; }
+        public TaskType Type { get; }
+        public DateTime? DueDate { get; private set; }
+        public string? Summary { get; private set; }
+        public List<Event> History { get; }
 
-        public Task(string title, string description, DateTime dueDate, TaskPriority priority, TaskType type)
+        public Task(string title, TaskPriority priority, TaskType type, DateTime? dueDate = null, string? summary = null)
         {
-            _title = title;
-            _description = description;
-            _dueDate = dueDate;
-            _priority = priority;
-            _type = type;
-            _state = TaskState.New;
+            Title = title;
+            Summary = summary;
+            DueDate = dueDate;
+            Priority = priority;
+            Type = type;
+            History = new List<Event> {new CreatedEvent()};
+        }
+
+        private TaskState GetState() => History[^1].State;
+
+        public void SetDone()
+        {
+            History.Add(new TaskDoneEvent());
+            Console.WriteLine($"Task [{Title}] is done!");
+        }
+
+        public void SetWontDo()
+        {
+            if (GetState() == TaskState.Done)
+            {
+                Console.WriteLine($"Error: Task [{Title}] is done.");
+                return;
+            }
+            History.Add(new TaskWontDoEvent());
+            Console.WriteLine($"Task [{Title}] is no longer relevant!");
+        }
+
+        public override string ToString()
+        {
+            string res = $"- {Title}\n" +
+                         $"[{Type.ToString()}] [{GetState().ToString()}]\n" +
+                         $"Priority: {Priority.ToString()}";
+            if (DueDate != null)
+                res += $", Due till {DueDate:d}";
+            if (!string.IsNullOrEmpty(Summary))
+                res += $"\n{Summary}";
+            return res;
+        }
+
+        public static Task CreateTask()
+        {
+            Console.WriteLine("Enter title");
+            string? title = Console.ReadLine();
+            if (string.IsNullOrEmpty(title))
+                throw new ArgumentException("Input error. Check input data and try again.");
+
+            Console.WriteLine("Enter summary");
+            string? summary = Console.ReadLine();
+
+            Console.WriteLine("Enter dueDate");
+            string? dueDateStr = Console.ReadLine();
+
+            Console.WriteLine("Enter type [Work, Study, Personal]");
+            string? typeStr = Console.ReadLine();
+            TaskType type;
+            if (string.IsNullOrEmpty(typeStr) || !Enum.TryParse(typeStr, true, out type))
+                throw new ArgumentException("Input error. Check input data and try again.");
+
+            Console.WriteLine("Enter priority [Low, Normal, High]");
+            string? priorityStr = Console.ReadLine();
+            TaskPriority priority;
+            if (string.IsNullOrEmpty(priorityStr) || !Enum.TryParse(priorityStr, true, out priority))
+                throw new ArgumentException("Input error. Check input data and try again.");
+
+            // creating task
+            var result = new Task(title, priority, type);
+
+            // optional parameters
+            if (DateTime.TryParse(dueDateStr, out DateTime dueDate))
+                result.DueDate = dueDate;
+            if (!string.IsNullOrEmpty(summary))
+                result.Summary = summary;
+
+            return result;
         }
     };
 }
