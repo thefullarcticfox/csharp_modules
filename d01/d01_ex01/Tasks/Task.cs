@@ -28,7 +28,8 @@ namespace d01_ex01.Tasks
 
         public void SetDone()
         {
-            History.Add(new TaskDoneEvent());
+            if (GetState() != TaskState.Done)
+                History.Add(new TaskDoneEvent());
             Console.WriteLine($"Task [{Title}] is done!");
         }
 
@@ -70,14 +71,12 @@ namespace d01_ex01.Tasks
 
             Console.WriteLine("Enter type [Work, Study, Personal]");
             string? typeStr = Console.ReadLine();
-            TaskType type;
-            if (string.IsNullOrEmpty(typeStr) || !Enum.TryParse(typeStr, true, out type))
+            if (!Enum.TryParse(typeStr, true, out TaskType type))
                 throw new ArgumentException("Input error. Check input data and try again.");
 
             Console.WriteLine("Enter priority [Low, Normal, High]");
             string? priorityStr = Console.ReadLine();
-            TaskPriority priority;
-            if (string.IsNullOrEmpty(priorityStr) || !Enum.TryParse(priorityStr, true, out priority))
+            if (!Enum.TryParse(priorityStr, true, out TaskPriority priority))
                 throw new ArgumentException("Input error. Check input data and try again.");
 
             // creating task

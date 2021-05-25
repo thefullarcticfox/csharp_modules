@@ -31,7 +31,7 @@ void SetTaskState(string state)
 {
     Console.WriteLine("Enter title");
     string? title = Console.ReadLine();
-    Task? todo = tasks?.Find(task => task.Title == title);
+    Task? todo = tasks.Find(task => task.Title == title);
     if (todo == null)
         Console.WriteLine("Input error. No such task.");
     else
