@@ -22,7 +22,7 @@ namespace d01_ex01.Tasks
             DueDate = dueDate;
             Priority = priority;
             Type = type;
-            History = new List<Event> {new CreatedEvent()};
+            History = new List<Event> { new CreatedEvent() };
         }
 
         private TaskState GetState() => History[^1].State;
