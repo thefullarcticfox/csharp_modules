@@ -35,15 +35,9 @@ namespace d01_ex00
         {
             if (!_knownCurrencies.Contains(sum.Currency))
                 throw new ArgumentException("Input error. Check input data and try again.");
-
-            // select by fromCurrency and sort by ToCurrency
-            List<ExchangeRate> selectedRates = _rates.FindAll(rate => sum.Currency == rate.FromCurrency);
-            selectedRates.Sort((rate1, rate2) =>
-                string.Compare(rate1.ToCurrency, rate2.ToCurrency, StringComparison.Ordinal));
-
-            // do exchange
-            foreach (ExchangeRate rate in selectedRates)
-                yield return Exchange(sum, rate);
+            foreach (ExchangeRate rate in _rates)
+                if (rate.FromCurrency == sum.Currency)
+                    yield return Exchange(sum, rate);
         }
     }
 }

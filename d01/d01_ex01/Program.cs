@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using d01_ex01.Tasks;
 
@@ -35,8 +34,8 @@ void ListTasks()
 void SetTaskState(string state)
 {
     Console.WriteLine("Enter title");
-    string? title = Console.ReadLine();
-    Task? todo = tasks.Find(task => task.Title == title);
+    string title = Console.ReadLine();
+    Task todo = tasks.Find(task => task.Title == title);
     if (todo == null)
         Console.WriteLine("Input error. No such task.");
     else
@@ -52,7 +51,7 @@ void SetTaskState(string state)
 while (true)
 {
     Console.Write("Enter your command [add, list, done, wontdo, quit]: ");
-    string? cmd = Console.ReadLine();
+    string cmd = Console.ReadLine();
     if (cmd == "add")
         AddTask();
     else if (cmd == "list")
