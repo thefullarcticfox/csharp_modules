@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using d01_ex01.Tasks;
+
+CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
 var tasks = new List<Task>();
 
