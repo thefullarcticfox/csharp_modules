@@ -5,62 +5,70 @@ using d01_ex01.Tasks;
 
 CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
-var tasks = new List<Task>();
-
-void AddTask()
-{
-    try
-    {
-        tasks.Add(Task.CreateTask());
-        Console.WriteLine();
-        Console.WriteLine(tasks[^1].ToString());
-    }
-    catch (ArgumentException e)
-    {
-        Console.WriteLine(e.Message);
-    }
-    Console.WriteLine();
-}
-
-void ListTasks()
-{
-    if (tasks.Count == 0)
-        Console.WriteLine("Task list is empty.");
-    else
-        foreach (Task task in tasks)
-        {
-            Console.WriteLine(task.ToString());
-            Console.WriteLine();
-        }
-}
-
-void SetTaskState(string state)
-{
-    Console.WriteLine("Enter title");
-    string title = Console.ReadLine();
-    Task todo = tasks.Find(task => task.Title == title);
-    if (todo == null)
-        Console.WriteLine("Input error. No such task.");
-    else
-    {
-        if (state == "done")
-            todo.SetDone();
-        else
-            todo.SetWontDo();
-    }
-    Console.WriteLine();
-}
-
+var tracker = new TasksTracker();
 while (true)
 {
     Console.Write("Enter your command [add, list, done, wontdo, quit]: ");
     string cmd = Console.ReadLine();
     if (cmd == "add")
-        AddTask();
+        tracker.AddTask();
     else if (cmd == "list")
-        ListTasks();
+        tracker.ListTasks();
     else if (cmd is "done" or "wontdo")
-        SetTaskState(cmd);
+        tracker.SetTaskState(cmd);
     else if (cmd is "q" or "quit")
         break;
+}
+
+internal class TasksTracker
+{
+    private readonly List<Task> _tasks;
+
+    public TasksTracker() => _tasks = new List<Task>();
+
+    public void AddTask()
+    {
+        try
+        {
+            _tasks.Add(Task.CreateTask());
+            Console.WriteLine();
+            Console.WriteLine(_tasks[^1].ToString());
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        Console.WriteLine();
+    }
+
+    public void ListTasks()
+    {
+        if (_tasks.Count == 0)
+            Console.WriteLine("Task list is empty.");
+        else
+            foreach (Task task in _tasks)
+            {
+                Console.WriteLine(task.ToString());
+                Console.WriteLine();
+            }
+    }
+
+    public void SetTaskState(string state)
+    {
+        Console.WriteLine("Enter title");
+        string title = Console.ReadLine();
+        Task todo = _tasks.Find(task => task.Title == title);
+        if (todo == null)
+            Console.WriteLine("Input error. No such task.");
+        else
+        {
+            if (state == "done")
+                todo.SetDone();
+            else
+                todo.SetWontDo();
+        }
+
+        Console.WriteLine();
+    }
 }
