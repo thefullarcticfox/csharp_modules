@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using d01_ex00;
 using d01_ex00.Models;
+
+CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
 if (args.Length < 2)
 {
