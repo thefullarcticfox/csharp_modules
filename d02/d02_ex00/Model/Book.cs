@@ -24,6 +24,10 @@ namespace d02_ex00.Model
 
         [JsonPropertyName("amazon_product_url")]
         public string Url { get; set; }
+
+        public override string ToString() =>
+            $"{Title} by {Author} [{Rank} on NYT’s {ListName}]\n" +
+            $"{SummaryShort}\n{Url}";
     }
 
     public class BookDetail

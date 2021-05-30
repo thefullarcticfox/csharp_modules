@@ -11,30 +11,24 @@ CultureInfo.CurrentCulture = new CultureInfo("en-GB", false);
 
 var searchables = new List<ISearchable>();
 
+const string booksJsonFilename = "book_reviews.json";
+const string moviesJsonFilename = "movie_reviews.json";
+
 try
 {
-    const string bookJsonFilename = "book_reviews.json";
-    string bookJson = File.ReadAllText(bookJsonFilename);
-    var response = JsonSerializer.Deserialize<JsonResponse<Book>>(bookJson);
-    if (response == null) return;
-    searchables.AddRange(response.Results);
+    searchables.AddRange(JsonResponse<Book>.DeserializeFile(booksJsonFilename));
+    searchables.AddRange(JsonResponse<Movie>.DeserializeFile(moviesJsonFilename));
 }
 catch (Exception e)
 {
     Console.WriteLine(e.Message);
 }
 
-try
+for (var i = 0; i < searchables.Count; i++)
 {
-    const string movieJsonFilename = "movie_reviews.json";
-    string movieJson = File.ReadAllText(movieJsonFilename);
-    var response = JsonSerializer.Deserialize<JsonResponse<Movie>>(movieJson);
-    if (response == null) return;
-    searchables.AddRange(response.Results);
-}
-catch (Exception e)
-{
-    Console.WriteLine(e.Message);
+    Console.WriteLine($"{i} {searchables[i].MediaType}");
+    Console.WriteLine(searchables[i].ToString());
+    Console.WriteLine();
 }
 
 namespace d02_ex00
@@ -46,5 +40,12 @@ namespace d02_ex00
 
         [JsonPropertyName("results")]
         public List<T> Results { get; set; }
+
+        public static IEnumerable<T> DeserializeFile(string jsonFilename)
+        {
+            string bookJson = File.ReadAllText(jsonFilename);
+            var response = JsonSerializer.Deserialize<JsonResponse<T>>(bookJson);
+            return response.Results;
+        }
     }
 }
