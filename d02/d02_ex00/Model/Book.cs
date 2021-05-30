@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace d02_ex00.Model
 {
@@ -6,14 +7,14 @@ namespace d02_ex00.Model
     {
         public Media MediaType => Media.Book;
 
-        [JsonPropertyName("title")]
-        public string Title { get; set; }
+        [JsonPropertyName("book_details")]
+        public List<BookDetail> BookDetails { get; set; }
 
-        [JsonPropertyName("author")]
-        public string Author { get; set; }
+        public string Title => BookDetails[0].Title;
 
-        [JsonPropertyName("description")]
-        public string SummaryShort { get; set; }
+        public string Author => BookDetails[0].Author;
+
+        public string SummaryShort => BookDetails[0].Description;
 
         [JsonPropertyName("rank")]
         public int Rank { get; set; }
@@ -23,5 +24,17 @@ namespace d02_ex00.Model
 
         [JsonPropertyName("amazon_product_url")]
         public string Url { get; set; }
+    }
+
+    public class BookDetail
+    {
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("author")]
+        public string Author { get; set; }
     }
 }

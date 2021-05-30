@@ -18,6 +18,14 @@ namespace d02_ex00.Model
         [JsonPropertyName("summary_short")]
         public string SummaryShort { get; set; }
 
+        [JsonPropertyName("link")]
+        public Link Link { get; set; }
+
+        public string Url => Link.Url;
+    }
+
+    public class Link
+    {
         [JsonPropertyName("url")]
         public string Url { get; set; }
     }
