@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using d02_ex00;
 using d02_ex00.Model;
 
 CultureInfo.CurrentCulture = new CultureInfo("en-GB", false);
@@ -36,11 +37,14 @@ catch (Exception e)
     Console.WriteLine(e.Message);
 }
 
-public class JsonResponse<T> where T : ISearchable
+namespace d02_ex00
 {
-    [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public class JsonResponse<T> where T : ISearchable
+    {
+        [JsonPropertyName("status")]
+        public string Status { get; set; }
 
-    [JsonPropertyName("results")]
-    public List<T> Results { get; set; }
+        [JsonPropertyName("results")]
+        public List<T> Results { get; set; }
+    }
 }
