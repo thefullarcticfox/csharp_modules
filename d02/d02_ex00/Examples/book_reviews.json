@@ -1,0 +1,696 @@
+{
+   "status":"OK",
+   "copyright":"Copyright (c) 2021 The New York Times Company. All Rights Reserved.",
+   "num_results":15,
+   "last_modified":"2021-05-05T22:21:47-04:00",
+   "results":[
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":1,
+         "rank_last_week":0,
+         "weeks_on_list":1,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/0385547684?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"0385547684",
+               "isbn13":"9780385547680"
+            },
+            {
+               "isbn10":"0385547714",
+               "isbn13":"9780385547710"
+            },
+            {
+               "isbn10":"0593459288",
+               "isbn13":"9780593459287"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"SOOLEY",
+               "description":"Samuel Sooleymon receives a basketball scholarship to North Carolina Central and determines to bring his family over from a civil war-ravaged South Sudan.",
+               "contributor":"by John Grisham",
+               "author":"John Grisham",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Doubleday",
+               "primary_isbn13":"9780385547680",
+               "primary_isbn10":"0385547684"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":2,
+         "rank_last_week":2,
+         "weeks_on_list":5,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/059346527X?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"059346527X",
+               "isbn13":"9780593465271"
+            },
+            {
+               "isbn10":"0593465288",
+               "isbn13":"9780593465288"
+            },
+            {
+               "isbn10":"1644734362",
+               "isbn13":"9781644734360"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"THE HILL WE CLIMB",
+               "description":"The poem read on President Joe Biden's Inauguration Day, by the youngest poet to write and perform an inaugural poem.",
+               "contributor":"by Amanda Gorman",
+               "author":"Amanda Gorman",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Viking",
+               "primary_isbn13":"9780593465271",
+               "primary_isbn10":"059346527X"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":3,
+         "rank_last_week":0,
+         "weeks_on_list":1,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/1984821466?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"1984821466",
+               "isbn13":"9781984821461"
+            },
+            {
+               "isbn10":"1984821474",
+               "isbn13":"9781984821478"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"FINDING ASHLEY",
+               "description":"Two estranged sisters, one a former best-selling author, the other a nun, reconnect as one searches for the child the other gave up.",
+               "contributor":"by Danielle Steel",
+               "author":"Danielle Steel",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Delacorte",
+               "primary_isbn13":"9781984821461",
+               "primary_isbn10":"1984821466"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":4,
+         "rank_last_week":1,
+         "weeks_on_list":2,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/1538719673?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"1538719673",
+               "isbn13":"9781538719671"
+            },
+            {
+               "isbn10":"1538719649",
+               "isbn13":"9781538719640"
+            },
+            {
+               "isbn10":"1549160583",
+               "isbn13":"9781549160585"
+            },
+            {
+               "isbn10":"1549160575",
+               "isbn13":"9781549160578"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"A GAMBLING MAN",
+               "description":"Aloysius Archer, a World War II veteran, seeks to apprentice with Willie Dash, a private eye, in a corrupt California town.",
+               "contributor":"by David Baldacci",
+               "author":"David Baldacci",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Grand Central",
+               "primary_isbn13":"9781538719671",
+               "primary_isbn10":"1538719673"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":5,
+         "rank_last_week":4,
+         "weeks_on_list":13,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/1250178606?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"1250178606",
+               "isbn13":"9781250178602"
+            },
+            {
+               "isbn10":"1250178622",
+               "isbn13":"9781250178626"
+            },
+            {
+               "isbn10":"1250317258",
+               "isbn13":"9781250317254"
+            },
+            {
+               "isbn10":"1643588230",
+               "isbn13":"9781643588230"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"THE FOUR WINDS",
+               "description":"As dust storms roll during the Great Depression, Elsa must choose between saving the family and farm or heading West.",
+               "contributor":"by Kristin Hannah",
+               "author":"Kristin Hannah",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"St. Martin's",
+               "primary_isbn13":"9781250178602",
+               "primary_isbn10":"1250178606"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":6,
+         "rank_last_week":5,
+         "weeks_on_list":22,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/0525559477?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"0525559477",
+               "isbn13":"9780525559474"
+            },
+            {
+               "isbn10":"0525559485",
+               "isbn13":"9780525559481"
+            },
+            {
+               "isbn10":"0655697071",
+               "isbn13":"9780655697077"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"THE MIDNIGHT LIBRARY",
+               "description":"Nora Seed finds a library beyond the edge of the universe that contains books with multiple possibilities of the lives one could have lived.",
+               "contributor":"by Matt Haig",
+               "author":"Matt Haig",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Viking",
+               "primary_isbn13":"9780525559474",
+               "primary_isbn10":"0525559477"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":7,
+         "rank_last_week":3,
+         "weeks_on_list":3,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/059308702X?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"059308702X",
+               "isbn13":"9780593331644"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"OCEAN PREY",
+               "description":"The 31st book in the Prey series. When federal officers are killed, Lucas Davenport and Virgil Flowers team up to investigate matters.",
+               "contributor":"by John Sandford",
+               "author":"John Sandford",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Putnam",
+               "primary_isbn13":"9780593087022",
+               "primary_isbn10":"None"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":8,
+         "rank_last_week":0,
+         "weeks_on_list":1,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/0593318315?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"0593318315",
+               "isbn13":"9780593318317"
+            },
+            {
+               "isbn10":"0593318323",
+               "isbn13":"9780593318324"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"WHEREABOUTS",
+               "description":"A woman who feels lost in life finds solace in the city she calls home and gets a new outlook while visiting the sea.",
+               "contributor":"by Jhumpa Lahiri",
+               "author":"Jhumpa Lahiri",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Knopf",
+               "primary_isbn13":"9780593318317",
+               "primary_isbn10":"0593318315"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":9,
+         "rank_last_week":6,
+         "weeks_on_list":27,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/0765387565?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"0765387565",
+               "isbn13":"9780765387561"
+            },
+            {
+               "isbn10":"1250793971",
+               "isbn13":"9781250793997"
+            },
+            {
+               "isbn10":"1250793998",
+               "isbn13":"9781250795182"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"THE INVISIBLE LIFE OF ADDIE LARUE",
+               "description":"A Faustian bargain comes with a curse that affects the adventure Addie LaRue has across centuries.",
+               "contributor":"by V.E. Schwab",
+               "author":"V.E. Schwab",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Tor/Forge",
+               "primary_isbn13":"9780765387561",
+               "primary_isbn10":"0765387565"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":10,
+         "rank_last_week":0,
+         "weeks_on_list":1,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/0593158296?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"0593158296",
+               "isbn13":"9780593158296"
+            },
+            {
+               "isbn10":"059315830X",
+               "isbn13":"9780593158302"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"THRAWN ASCENDANCY: GREATER GOOD",
+               "description":"In this Star Wars saga, Thrawn and the Expansionary Defense Fleet discover how their enemy truly operates.",
+               "contributor":"by Timothy Zahn",
+               "author":"Timothy Zahn",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Del Rey",
+               "primary_isbn13":"9780593158296",
+               "primary_isbn10":"0593158296"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":11,
+         "rank_last_week":0,
+         "weeks_on_list":1,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/198210435X?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"198210435X",
+               "isbn13":"9781982104351"
+            },
+            {
+               "isbn10":"1982104376",
+               "isbn13":"9781982104375"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"A DISTANT SHORE",
+               "description":"A secret agent with the F.B.I. and a young woman betrothed by her father to a drug lord pretend to be in love for a mission.",
+               "contributor":"by Karen Kingsbury",
+               "author":"Karen Kingsbury",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Atria",
+               "primary_isbn13":"9781982104351",
+               "primary_isbn10":"198210435X"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":12,
+         "rank_last_week":10,
+         "weeks_on_list":48,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/0525536299?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"0525536299",
+               "isbn13":"9780525536291"
+            },
+            {
+               "isbn10":"0593329430",
+               "isbn13":"9780593329436"
+            },
+            {
+               "isbn10":"0593416961",
+               "isbn13":"9780593416969"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"THE VANISHING HALF",
+               "description":"The lives of twin sisters who run away from a Southern Black community at age 16 diverge as one returns and the other takes on a different racial identity but their fates intertwine.",
+               "contributor":"by Brit Bennett",
+               "author":"Brit Bennett",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Riverhead",
+               "primary_isbn13":"9780525536291",
+               "primary_isbn10":"0525536299"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":13,
+         "rank_last_week":7,
+         "weeks_on_list":9,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/059331817X?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"059331817X",
+               "isbn13":"9780593318171"
+            },
+            {
+               "isbn10":"0593318188",
+               "isbn13":"9780593318188"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"KLARA AND THE SUN",
+               "description":"An “Artificial Friend” named Klara is purchased to serve as a companion to an ailing 14-year-old girl.",
+               "contributor":"by Kazuo Ishiguro",
+               "author":"Kazuo Ishiguro",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Knopf",
+               "primary_isbn13":"9780593318171",
+               "primary_isbn10":"059331817X"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":14,
+         "rank_last_week":0,
+         "weeks_on_list":1,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/1250765374?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"1250765374",
+               "isbn13":"9781250765376"
+            },
+            {
+               "isbn10":"1250765382",
+               "isbn13":"9781250765383"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"FUGITIVE TELEMETRY",
+               "description":"The sixth book in the Murderbot Diaries series. When a dead body turns up on Preservation Station, Murderbot must speak to humans.",
+               "contributor":"by Martha Wells",
+               "author":"Martha Wells",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Tor.com",
+               "primary_isbn13":"9781250765376",
+               "primary_isbn10":"1250765374"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      },
+      {
+         "list_name":"Hardcover Fiction",
+         "display_name":"Hardcover Fiction",
+         "bestsellers_date":"2021-05-01",
+         "published_date":"2021-05-16",
+         "rank":15,
+         "rank_last_week":0,
+         "weeks_on_list":1,
+         "asterisk":0,
+         "dagger":0,
+         "amazon_product_url":"https://www.amazon.com/dp/0063048930?tag=NYTBSREV-20",
+         "isbns":[
+            {
+               "isbn10":"0063048930",
+               "isbn13":"9780063048935"
+            }
+         ],
+         "book_details":[
+            {
+               "title":"REUNION BEACH",
+               "description":"A collection of stories and other writing inspired by the work of the late author Dorothea Benton Frank.",
+               "contributor":"by Elin Hilderbrand et al",
+               "author":"Elin Hilderbrand et al",
+               "contributor_note":"",
+               "price":"0.00",
+               "age_group":"",
+               "publisher":"Morrow",
+               "primary_isbn13":"9780063048935",
+               "primary_isbn10":"0063048930"
+            }
+         ],
+         "reviews":[
+            {
+               "book_review_link":"",
+               "first_chapter_link":"",
+               "sunday_review_link":"",
+               "article_chapter_link":""
+            }
+         ]
+      }
+   ]
+}

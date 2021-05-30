@@ -1,0 +1,6 @@
+{
+  "Source": "JSON",
+  "Domain": "http://localhost",
+  "Port": 1234,
+  "CheckForUpdates": true
+}

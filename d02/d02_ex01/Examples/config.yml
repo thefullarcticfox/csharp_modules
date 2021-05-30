@@ -1,0 +1,8 @@
+Source:
+  YAML
+Application:
+  ex01
+CheckForUpdates:
+  false
+Port:
+  8080
