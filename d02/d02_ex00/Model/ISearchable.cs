@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace d02_ex00.Model
+﻿namespace d02_ex00.Model
 {
-    class ISearchable
+    public enum Media
     {
+        Book,
+        Movie
+    }
+
+    public interface ISearchable
+    {
+        public Media MediaType { get; }
     }
 }

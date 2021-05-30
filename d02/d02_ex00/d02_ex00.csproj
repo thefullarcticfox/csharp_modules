@@ -6,14 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Examples\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Examples\book_reviews.json">
+    <None Update="movie_reviews.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\movie_reviews.json">
+    <None Update="book_reviews.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,12 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
-namespace d02_ex01
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
-    }
-}
+CultureInfo.CurrentCulture = new CultureInfo("en-GB", false);
+Console.WriteLine("Hello World!");
