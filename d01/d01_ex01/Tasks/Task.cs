@@ -11,7 +11,7 @@ namespace d01_ex01.Tasks
         public TaskPriority Priority { get; private set; }
         public DateTime? DueDate { get; private set; }
         public string Summary { get; private set; }
-        public List<Event> History { get; }
+        private List<Event> _history { get; }
 
         public Task(string title, TaskType type, TaskPriority priority = TaskPriority.Normal,
             DateTime? dueDate = null, string summary = null)
@@ -21,15 +21,15 @@ namespace d01_ex01.Tasks
             DueDate = dueDate;
             Priority = priority;
             Type = type;
-            History = new List<Event> { new CreatedEvent() };
+            _history = new List<Event> { new CreatedEvent() };
         }
 
-        public TaskState State { get => History[^1].State; }
+        public TaskState State { get => _history[^1].State; }
 
         public void SetDone()
         {
             if (State != TaskState.Done)
-                History.Add(new TaskDoneEvent());
+                _history.Add(new TaskDoneEvent());
             Console.WriteLine($"Task [{Title}] is done!");
         }
 
@@ -40,7 +40,7 @@ namespace d01_ex01.Tasks
                 Console.WriteLine($"Error: Task [{Title}] is done.");
                 return;
             }
-            History.Add(new TaskWontDoEvent());
+            _history.Add(new TaskWontDoEvent());
             Console.WriteLine($"Task [{Title}] is no longer relevant!");
         }
 
