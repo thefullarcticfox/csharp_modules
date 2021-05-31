@@ -26,8 +26,8 @@ namespace d02_ex00.Model
         public string Url => Link.Url;
 
         public override string ToString() =>
-            $"- {Title} {(IsCriticsPick ? "[NYT critic’s pick]" : "")}\n" +
-            $"{SummaryShort}\n{Url}";
+            $"- {Title} {(IsCriticsPick ? "[NYT critic’s pick]" : "")}" +
+            Environment.NewLine + $"{SummaryShort}\n{Url}";
     }
 
     public class Link
@@ -45,8 +45,5 @@ namespace d02_ex00.Model
         public override void Write(Utf8JsonWriter writer,
             bool value, JsonSerializerOptions options) =>
             writer.WriteStringValue(value ? "1" : "0");
-
-        public override bool CanConvert(Type typeToConvert) =>
-            base.CanConvert(typeToConvert);
     }
 }

@@ -28,22 +28,23 @@ catch (Exception e)
 Console.WriteLine("Input search text:");
 string search = Console.ReadLine();
 
-IEnumerable<ISearchable> found = searchables.Where(
-    s => s.Title.Contains(search, StringComparison.OrdinalIgnoreCase));
+// toList() is done to silence Possible multiple enumeration warning
+IEnumerable<ISearchable> result = searchables.Where(
+    s => s.Title.Contains(search ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
 
-if (found.Count() == 0)
+if (!result.Any())
 {
     Console.WriteLine($"There are no \"{search}\" in media today");
     return;
 }
 
-Console.WriteLine($"Items found: {found.Count()}");
-FilterByMediaAndPrint(found, Media.Book);
-FilterByMediaAndPrint(found, Media.Movie);
+Console.WriteLine($"Items found: {result.Count()}");
+FilterByMediaAndPrint(result, Media.Book);
+FilterByMediaAndPrint(result, Media.Movie);
 
 static void FilterByMediaAndPrint(IEnumerable<ISearchable> found, Media media)
 {
-    var foundMedia = found.Where(s => s.MediaType == media);
+    IEnumerable<ISearchable> foundMedia = found.Where(s => s.MediaType == media).ToList();
     if (!foundMedia.Any()) return;
 
     Console.WriteLine(Environment.NewLine +
@@ -66,7 +67,7 @@ namespace d02_ex00
         {
             string bookJson = File.ReadAllText(jsonFilename);
             var response = JsonSerializer.Deserialize<JsonResponse<T>>(bookJson);
-            return response.Results;
+            return response?.Results;
         }
     }
 }

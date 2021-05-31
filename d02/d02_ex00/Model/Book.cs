@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace d02_ex00.Model
@@ -26,8 +27,8 @@ namespace d02_ex00.Model
         public string Url { get; set; }
 
         public override string ToString() =>
-            $"- {Title} by {Author} [{Rank} on NYT’s {ListName}]\n" +
-            $"{SummaryShort}\n{Url}";
+            $"- {Title} by {Author} [{Rank} on NYT’s {ListName}]" +
+            Environment.NewLine + $"{SummaryShort}\n{Url}";
     }
 
     public class BookDetail
