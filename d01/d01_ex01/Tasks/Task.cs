@@ -24,18 +24,18 @@ namespace d01_ex01.Tasks
             History = new List<Event> { new CreatedEvent() };
         }
 
-        private TaskState GetState() => History[^1].State;
+        public TaskState State { get => History[^1].State; }
 
         public void SetDone()
         {
-            if (GetState() != TaskState.Done)
+            if (State != TaskState.Done)
                 History.Add(new TaskDoneEvent());
             Console.WriteLine($"Task [{Title}] is done!");
         }
 
         public void SetWontDo()
         {
-            if (GetState() == TaskState.Done)
+            if (State == TaskState.Done)
             {
                 Console.WriteLine($"Error: Task [{Title}] is done.");
                 return;
@@ -47,8 +47,8 @@ namespace d01_ex01.Tasks
         public override string ToString()
         {
             string res = $"- {Title}\n" +
-                         $"[{Type.ToString()}] [{GetState().ToString()}]\n" +
-                         $"Priority: {Priority.ToString()}, Due till {DueDate:d}";
+                         $"[{Type}] [{State}]\n" +
+                         $"Priority: {Priority}, Due till {DueDate:d}";
             if (!string.IsNullOrEmpty(Summary))
                 res += $"\n{Summary}";
             return res;
