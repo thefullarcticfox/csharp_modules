@@ -65,8 +65,8 @@ namespace d02_ex00
 
         public static IEnumerable<T> DeserializeFile(string jsonFilename)
         {
-            string bookJson = File.ReadAllText(jsonFilename);
-            var response = JsonSerializer.Deserialize<JsonResponse<T>>(bookJson);
+            string jsonText = File.ReadAllText(jsonFilename);
+            var response = JsonSerializer.Deserialize<JsonResponse<T>>(jsonText);
             return response?.Results;
         }
     }
