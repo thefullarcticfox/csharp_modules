@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.IO;
 using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.TypeResolvers;
 
 namespace d02_ex01.Configuration.Sources
 {
@@ -17,6 +16,20 @@ namespace d02_ex01.Configuration.Sources
             IDeserializer deserializer = new DeserializerBuilder().Build();
             string yamlText = File.ReadAllText(_configPath);
             Params = deserializer.Deserialize<Hashtable>(yamlText);
+
+            var keys = new ArrayList(Params.Keys);
+            foreach (string key in keys)
+            {
+                string str = Params[key].ToString();
+                if (str == "true")
+                    Params[key] = true;
+                else if (str == "false")
+                    Params[key] = false;
+                else if (int.TryParse(Params[key].ToString(), out int tmpInt))
+                    Params[key] = tmpInt;
+                else if (double.TryParse(Params[key].ToString(), out double tmpDouble))
+                    Params[key] = tmpDouble;
+            }
         }
     }
 }
