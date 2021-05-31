@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using d02_ex00;
@@ -24,11 +25,31 @@ catch (Exception e)
     Console.WriteLine(e.Message);
 }
 
-for (var i = 0; i < searchables.Count; i++)
+Console.WriteLine("Input search text:");
+string search = Console.ReadLine();
+
+IEnumerable<ISearchable> found = searchables.Where(
+    s => s.Title.Contains(search, StringComparison.OrdinalIgnoreCase));
+
+if (found.Count() == 0)
 {
-    Console.WriteLine($"{i} {searchables[i].MediaType}");
-    Console.WriteLine(searchables[i].ToString());
-    Console.WriteLine();
+    Console.WriteLine($"There are no \"{search}\" in media today");
+    return;
+}
+
+Console.WriteLine($"Items found: {found.Count()}");
+FilterByMediaAndPrint(found, Media.Book);
+FilterByMediaAndPrint(found, Media.Movie);
+
+static void FilterByMediaAndPrint(IEnumerable<ISearchable> found, Media media)
+{
+    var foundMedia = found.Where(s => s.MediaType == media);
+    if (!foundMedia.Any()) return;
+
+    Console.WriteLine(Environment.NewLine +
+        $"{media} search result [{foundMedia.Count()}]");
+    Console.WriteLine(string.Join(Environment.NewLine,
+        foundMedia.Select(q => q.ToString())));
 }
 
 namespace d02_ex00

@@ -9,5 +9,6 @@
     public interface ISearchable
     {
         public Media MediaType { get; }
+        public string Title { get; }
     }
 }
