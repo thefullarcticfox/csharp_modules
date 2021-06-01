@@ -6,35 +6,19 @@ namespace d02_ex01.Configuration.Sources
 {
     class YamlSource : IConfigurationSource
     {
-        private string _configPath;
-        public Hashtable Params { get; set; }
+        private readonly string _configPath;
+        private readonly int _priority;
+        private readonly Hashtable _params;
+        public Hashtable Params { get => _params; }
+        public int Priority { get => _priority; }
 
-        public YamlSource(string configPath)
+        public YamlSource(string configPath, int priority)
         {
             _configPath = configPath;
-
+            _priority = priority;
             IDeserializer deserializer = new DeserializerBuilder().Build();
             string yamlText = File.ReadAllText(_configPath);
-            Params = deserializer.Deserialize<Hashtable>(yamlText);
-
-            TempConverterAfterInit();
-        }
-
-        private void TempConverterAfterInit()
-        {
-            var keys = new ArrayList(Params.Keys);
-            foreach (string key in keys)
-            {
-                string str = Params[key].ToString();
-                if (str == "true")
-                    Params[key] = true;
-                else if (str == "false")
-                    Params[key] = false;
-                else if (int.TryParse(Params[key].ToString(), out int tmpInt))
-                    Params[key] = tmpInt;
-                else if (double.TryParse(Params[key].ToString(), out double tmpDouble))
-                    Params[key] = tmpDouble;
-            }
+            _params = deserializer.Deserialize<Hashtable>(yamlText);
         }
     }
 }

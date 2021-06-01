@@ -2,8 +2,9 @@
 
 namespace d02_ex01.Configuration.Sources
 {
-    interface IConfigurationSource
+    public interface IConfigurationSource
     {
         public Hashtable Params { get; }
+        public int Priority { get; }
     }
 }
