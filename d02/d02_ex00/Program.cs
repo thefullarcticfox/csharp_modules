@@ -27,6 +27,7 @@ catch (Exception e)
 
 Console.WriteLine("Input search text:");
 string search = Console.ReadLine();
+Console.WriteLine();
 
 // toList() is done to silence Possible multiple enumeration warning
 IEnumerable<ISearchable> result = searchables.Where(
@@ -34,7 +35,7 @@ IEnumerable<ISearchable> result = searchables.Where(
 
 if (!result.Any())
 {
-    Console.WriteLine($"There are no \"{search}\" in media today");
+    Console.WriteLine($"There are no \"{search}\" in media today.");
     return;
 }
 
