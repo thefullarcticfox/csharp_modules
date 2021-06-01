@@ -13,10 +13,10 @@ IConfigurationSource yamlConfig = new YamlSource(yamlConfigFile);
 
 foreach (DictionaryEntry entry in jsonConfig.Params)
 {
-    Console.WriteLine($"[{entry.Key}] {entry.Value}");
+    Console.WriteLine($"{entry.Key} : {entry.Value}");
 }
 Console.WriteLine("--------------------------------------------");
 foreach (DictionaryEntry entry in yamlConfig.Params)
 {
-    Console.WriteLine($"[{entry.Key}] {entry.Value}");
+    Console.WriteLine($"{entry.Key} : {entry.Value}");
 }
