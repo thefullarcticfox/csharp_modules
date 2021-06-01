@@ -17,6 +17,11 @@ namespace d02_ex01.Configuration.Sources
             string yamlText = File.ReadAllText(_configPath);
             Params = deserializer.Deserialize<Hashtable>(yamlText);
 
+            TempConverterAfterInit();
+        }
+
+        private void TempConverterAfterInit()
+        {
             var keys = new ArrayList(Params.Keys);
             foreach (string key in keys)
             {
