@@ -7,13 +7,17 @@ namespace d02_ex01.Configuration
 {
     public class Configuration
     {
-        public Hashtable Params;
+        public readonly Hashtable Params;
 
         public Configuration(List<IConfigurationSource> sources)
         {
-            Params = new Hashtable(sources[0].Params);
-            foreach (DictionaryEntry param in sources[1].Params)
-                Params[param.Key] = param.Value;
+            var sortedSrcs = new List<IConfigurationSource>(sources);   // so it wont mutate outside
+            sortedSrcs.Sort((src1, src2) => src1.Priority - src2.Priority);
+
+            Params = new Hashtable();
+            foreach (IConfigurationSource src in sortedSrcs)
+                foreach (DictionaryEntry param in src.Params)
+                    Params[param.Key] = param.Value;
         }
 
         public void PrintConfig()

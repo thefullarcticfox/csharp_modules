@@ -6,17 +6,19 @@ using System.Globalization;
 
 CultureInfo.CurrentCulture = new CultureInfo("en-GB", false);
 
-List<IConfigurationSource> configs = new List<IConfigurationSource>(2);
+Configuration configuration;
 try
 {
+    var configs = new List<IConfigurationSource>(2);
     if (!int.TryParse(args[1], out int jsonConfigPriority) ||
         !int.TryParse(args[3], out int yamlConfigPriority))
-        throw new Exception("Invalid args");
+        throw new ArgumentException("Invalid arguments");
     string jsonConfigFile = args[0];
     string yamlConfigFile = args[2];
+
     configs.Add(new JsonSource(jsonConfigFile, jsonConfigPriority));
     configs.Add(new YamlSource(yamlConfigFile, yamlConfigPriority));
-    configs.Sort((conf1, conf2) => conf1.Priority - conf2.Priority);
+    configuration = new Configuration(configs);
 }
 catch
 {
@@ -24,5 +26,4 @@ catch
     return;
 }
 
-var configuration = new Configuration(configs);
 configuration.PrintConfig();
