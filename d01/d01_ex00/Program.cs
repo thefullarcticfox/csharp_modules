@@ -6,29 +6,19 @@ using d01_ex00.Models;
 
 CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
-if (args.Length < 2)
-{
-    Console.WriteLine("Input error. Check input data and try again.");
-    return;
-}
-
-string sum = args[0];
-string ratesDirectory = args[1];
-
 try
 {
+    string sum = args[0];
+    string ratesDirectory = args[1];
     var sumToExchange = new ExchangeSum(sum);
     var exchanger = new Exchanger(ratesDirectory);
 
-    // output
     IEnumerable<ExchangeSum> result = exchanger.Exchange(sumToExchange);
-    Console.WriteLine($"Sum in original currency: {sumToExchange.ToString()}");
+    Console.WriteLine($"Sum in original currency: {sumToExchange}");
     foreach (ExchangeSum exchanged in result)
-    {
-        Console.WriteLine($"Sum in {exchanged.Currency}: {exchanged.ToString()}");
-    }
+        Console.WriteLine($"Sum in {exchanged.Currency}: {exchanged}");
 }
-catch (Exception e)
+catch
 {
-    Console.WriteLine(e.Message);
+    Console.WriteLine("Input error. Check input data and try again.");
 }

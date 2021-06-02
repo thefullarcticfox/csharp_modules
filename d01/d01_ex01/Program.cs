@@ -5,7 +5,7 @@ using d01_ex01.Tasks;
 
 CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
 
-var tracker = new TasksTracker();
+var tracker = new TaskTracker();
 while (true)
 {
     Console.Write("Enter your command [add, list, done, wontdo, quit]: ");
@@ -20,11 +20,11 @@ while (true)
         break;
 }
 
-internal class TasksTracker
+internal class TaskTracker
 {
     private readonly List<Task> _tasks;
 
-    public TasksTracker() => _tasks = new List<Task>();
+    public TaskTracker() => _tasks = new List<Task>();
 
     public void AddTask()
     {

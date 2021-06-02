@@ -24,7 +24,7 @@ namespace d01_ex01.Tasks
             History = new List<Event> { new CreatedEvent() };
         }
 
-        public TaskState State { get => History[^1].State; }
+        public TaskState State => History[^1].State;
 
         public void SetDone()
         {
