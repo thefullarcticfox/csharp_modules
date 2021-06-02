@@ -28,13 +28,21 @@ namespace d01_ex00
         private static ExchangeSum Exchange(ExchangeSum sum, ExchangeRate rate) =>
             new(sum.Sum * rate.Rate, rate.ToCurrency);
 
-        public IEnumerable<ExchangeSum> Exchange(ExchangeSum sum)
+        /* ExchangeIterator is an iterator method (yield return)
+         * it won't execute until returned sequence is consumed by foreach or LINQ
+         * that's why i return iterator method after checking known currency in Exchange */
+        private IEnumerable<ExchangeSum> ExchangeIterator(ExchangeSum sum)
         {
-            if (!KnownCurrencies.Contains(sum.Currency))
-                throw new ArgumentException("Input error. Check input data and try again.");
             foreach (ExchangeRate rate in Rates)
                 if (rate.FromCurrency == sum.Currency)
                     yield return Exchange(sum, rate);
+        }
+
+        public IEnumerable<ExchangeSum> Exchange(ExchangeSum sum)
+        {
+            if (!KnownCurrencies.Contains(sum.Currency))
+                throw new ArgumentException("Unknown currency");
+            return ExchangeIterator(sum);
         }
     }
 }

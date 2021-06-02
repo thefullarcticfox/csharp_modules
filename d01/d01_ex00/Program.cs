@@ -14,6 +14,8 @@ try
     var exchanger = new Exchanger(ratesDirectory);
 
     IEnumerable<ExchangeSum> result = exchanger.Exchange(sumToExchange);
+
+    // output
     Console.WriteLine($"Sum in original currency: {sumToExchange}");
     foreach (ExchangeSum exchanged in result)
         Console.WriteLine($"Sum in {exchanged.Currency}: {exchanged}");
