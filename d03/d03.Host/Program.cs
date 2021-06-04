@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration.Json;
+using d03.Nasa;
+using d03.Nasa.Apod;
+using d03.Nasa.NeoWs;
 
 namespace d03.Host
 {
@@ -7,7 +10,14 @@ namespace d03.Host
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            if (args.Length < 2)
+            {
+                Console.WriteLine("Wrong number of arguments");
+                return;
+            }
+            ApiClientBase nasaClient;
+            nasaClient = new ApodClient("DEMO_KEY");
+            nasaClient = new NeoWsClient("DEMO_KEY");
         }
     }
 }
