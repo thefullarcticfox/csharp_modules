@@ -4,10 +4,9 @@ using YamlDotNet.Serialization;
 
 namespace d02_ex01.Configuration.Sources
 {
-    class YamlSource : IConfigurationSource
+    public class YamlSource : IConfigurationSource
     {
         private readonly string _configPath;
-        public Hashtable Params { get; }
         public int Priority { get; }
 
         public YamlSource(string configPath, int priority)

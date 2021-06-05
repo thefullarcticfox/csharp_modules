@@ -1,6 +1,7 @@
 ﻿using d02_ex01.Configuration;
 using d02_ex01.Configuration.Sources;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -19,11 +20,12 @@ try
     configs.Add(new JsonSource(jsonConfigFile, jsonConfigPriority));
     configs.Add(new YamlSource(yamlConfigFile, yamlConfigPriority));
     configuration = new Configuration(configs);
-    configuration.PrintConfig();
+
+    foreach (DictionaryEntry entry in configuration.Params)
+        Console.WriteLine($"{entry.Key} : {entry.Value}");
 }
 catch
 {
     Console.WriteLine("Invalid data. Check your input and try again.");
-    return;
 }
 

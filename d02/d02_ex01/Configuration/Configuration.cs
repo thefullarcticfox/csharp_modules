@@ -1,7 +1,6 @@
-﻿using d02_ex01.Configuration.Sources;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using d02_ex01.Configuration.Sources;
 
 namespace d02_ex01.Configuration
 {
@@ -18,12 +17,6 @@ namespace d02_ex01.Configuration
             foreach (IConfigurationSource src in sortedSrcs)
                 foreach (DictionaryEntry param in src.Deserialize())
                     Params[param.Key] = param.Value;
-        }
-
-        public void PrintConfig()
-        {
-            foreach (DictionaryEntry entry in Params)
-                Console.WriteLine($"{entry.Key} : {entry.Value}");
         }
     }
 }
