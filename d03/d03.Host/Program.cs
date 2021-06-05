@@ -1,35 +1,33 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.Extensions.Configuration;
-using d03.Nasa;
 using d03.Nasa.Apod;
 using d03.Nasa.Apod.Models;
-using d03.Nasa.NeoWs;
-using d03.Nasa.NeoWs.Models;
 using System.Threading.Tasks;
 
 namespace d03.Host
 {
-    class Program
+    internal static class Program
     {
-        private static readonly string _configFile = "appsettings.json";
+        private const string ConfigFile = "appsettings.json";
         private static IConfiguration _config;
 
         public static async Task Main(string[] args)
         {
             CultureInfo.CurrentCulture = new CultureInfo("en-GB", false);
 
-            if (args.Length < 2 || (args[0] != "apod" && args[1] != "neows") ||
+            if (args.Length < 2 || (args[0] != "apod" && args[0] != "neows") ||
                 !int.TryParse(args[1], out int count))
             {
-                Console.WriteLine("Invalid arguments. Expected: {apod|neows} {count}");
+                Console.WriteLine("Invalid arguments. Expected: {API} {count}");
+                Console.WriteLine("- API is \"apod\" or \"neows\"\n- count is an integer");
                 return;
             }
 
             try
             {
                 _config = new ConfigurationBuilder()
-                    .AddJsonFile(_configFile)
+                    .AddJsonFile(ConfigFile)
                     .Build();
                 string apiKey = _config["ApiKey"];
 

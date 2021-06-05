@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -7,24 +7,25 @@ namespace d03.Nasa
 {
     public abstract class ApiClientBase
     {
-        protected readonly string _apiKey;
-        protected readonly HttpClient httpClient = new HttpClient();
+        protected readonly string ApiKey;
+        private readonly HttpClient _httpClient;
 
         protected ApiClientBase(string apiKey)
         {
-            _apiKey = apiKey;
+            ApiKey = apiKey;
+            _httpClient = new HttpClient();
         }
 
         protected async Task<T> HttpGetAsync<T>(string url)
         {
-            var response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+            using HttpResponseMessage response = await _httpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                var streamTask = response.Content.ReadAsStreamAsync();
+                using Task<Stream> streamTask = response.Content.ReadAsStreamAsync();
                 return await JsonSerializer.DeserializeAsync<T>(await streamTask);
             }
 
-            var content = await response.Content.ReadAsStringAsync();
+            string content = await response.Content.ReadAsStringAsync();
             throw new HttpRequestException($"GET \"{url}\" returned {response.StatusCode}:\n{content}");
         }
     }

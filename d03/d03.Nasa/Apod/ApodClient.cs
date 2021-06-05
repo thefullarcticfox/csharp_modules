@@ -1,6 +1,4 @@
 ﻿using d03.Nasa.Apod.Models;
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace d03.Nasa.Apod
@@ -11,8 +9,8 @@ namespace d03.Nasa.Apod
 
         public async Task<MediaOfToday[]> GetAsync(int count)
         {
-            var res = await HttpGetAsync<MediaOfToday[]>
-                ($"https://api.nasa.gov/planetary/apod?api_key={_apiKey}&count={count}");
+            MediaOfToday[] res = await HttpGetAsync<MediaOfToday[]>
+                ($"https://api.nasa.gov/planetary/apod?api_key={ApiKey}&count={count}");
             return res;
         }
     }
