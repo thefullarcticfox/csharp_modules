@@ -32,7 +32,7 @@ internal class TaskTracker
         {
             _tasks.Add(Task.CreateTask());
             Console.WriteLine();
-            Console.WriteLine(_tasks[^1].ToString());
+            Console.WriteLine($"- {_tasks[^1]}");
         }
         catch (ArgumentException e)
         {
@@ -47,11 +47,10 @@ internal class TaskTracker
         if (_tasks.Count == 0)
             Console.WriteLine("Task list is empty.");
         else
+        {
             foreach (Task task in _tasks)
-            {
-                Console.WriteLine(task.ToString());
-                Console.WriteLine();
-            }
+                Console.WriteLine($"- {task}" + Environment.NewLine);
+        }
     }
 
     public void SetTaskState(string state)

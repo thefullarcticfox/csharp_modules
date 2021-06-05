@@ -1,7 +1,6 @@
 ﻿using d03.Nasa.Apod.Models;
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace d03.Nasa.Apod
@@ -10,9 +9,11 @@ namespace d03.Nasa.Apod
     {
         public ApodClient(string apiKey) : base(apiKey) {}
 
-        public Task<MediaOfToday[]> GetAsync(int input)
+        public async Task<MediaOfToday[]> GetAsync(int count)
         {
-            throw new NotImplementedException();
+            var res = await HttpGetAsync<MediaOfToday[]>
+                ($"https://api.nasa.gov/planetary/apod?api_key={_apiKey}&count={count}");
+            return res;
         }
     }
 }

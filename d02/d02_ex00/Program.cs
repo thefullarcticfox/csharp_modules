@@ -51,7 +51,7 @@ static void FilterByMediaAndPrint(IEnumerable<ISearchable> found, Media media)
     Console.WriteLine(Environment.NewLine +
         $"{media} search result [{foundMedia.Count()}]");
     Console.WriteLine(string.Join(Environment.NewLine,
-        foundMedia.Select(q => q.ToString())));
+        foundMedia.Select(q => $"- {q}")));
 }
 
 namespace d02_ex00

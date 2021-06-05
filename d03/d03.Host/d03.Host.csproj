@@ -29,4 +29,10 @@
     <ProjectReference Include="..\d03.Nasa\d03.Nasa.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -27,7 +27,7 @@ namespace d02_ex00.Model
         public string Url { get; set; }
 
         public override string ToString() =>
-            $"- {Title} by {Author} [{Rank} on NYT’s {ListName}]" +
+            $"{Title} by {Author} [{Rank} on NYT’s {ListName}]" +
             Environment.NewLine + $"{SummaryShort}\n{Url}";
     }
 

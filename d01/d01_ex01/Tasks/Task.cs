@@ -46,7 +46,7 @@ namespace d01_ex01.Tasks
 
         public override string ToString()
         {
-            string res = $"- {Title}\n" +
+            string res = $"{Title}\n" +
                          $"[{Type}] [{State}]\n" +
                          $"Priority: {Priority}, Due till {DueDate:d}";
             if (!string.IsNullOrEmpty(Summary))
