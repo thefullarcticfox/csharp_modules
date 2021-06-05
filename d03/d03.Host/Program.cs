@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using d03.Nasa.Apod;
 using d03.Nasa.Apod.Models;
 using System.Threading.Tasks;
+using d03.Nasa.NeoWs;
+using d03.Nasa.NeoWs.Models;
 
 namespace d03.Host
 {
@@ -37,6 +39,14 @@ namespace d03.Host
                     MediaOfToday[] res = await nasaClient.GetAsync(count);
                     foreach (MediaOfToday media in res)
                         Console.WriteLine($"{media}{Environment.NewLine}");
+                }
+                else
+                {
+                    if (!DateTime.TryParse(_config["NeoWs:StartDate"], out DateTime startDate) ||
+                        !DateTime.TryParse(_config["NeoWs:EndDate"], out DateTime endDate))
+                        throw new ArgumentException($"Invalid dates in {ConfigFile}");
+                    var request = new AsteroidRequest(startDate, endDate);
+                    var nasaClient = new NeoWsClient(apiKey);
                 }
             }
             catch (Exception e)
