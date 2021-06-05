@@ -28,7 +28,7 @@ namespace d02_ex00.Model
 
         public override string ToString() =>
             $"{Title} by {Author} [{Rank} on NYT’s {ListName}]" +
-            Environment.NewLine + $"{SummaryShort}\n{Url}";
+            $"{Environment.NewLine}{SummaryShort}{Environment.NewLine}{Url}";
     }
 
     public class BookDetail

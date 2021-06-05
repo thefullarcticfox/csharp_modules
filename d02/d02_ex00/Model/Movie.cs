@@ -27,7 +27,7 @@ namespace d02_ex00.Model
 
         public override string ToString() =>
             $"{Title} {(IsCriticsPick ? "[NYT critic’s pick]" : "")}" +
-            Environment.NewLine + $"{SummaryShort}\n{Url}";
+            $"{Environment.NewLine}{SummaryShort}{Environment.NewLine}{Url}";
     }
 
     public class Link

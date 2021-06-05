@@ -12,9 +12,11 @@ namespace d03.Nasa.NeoWs
     {
         public NeoWsClient(string apiKey) : base(apiKey) {}
 
-        public Task<AsteroidLookup[]> GetAsync(AsteroidRequest request)
+        public async Task<AsteroidLookup[]> GetAsync(AsteroidRequest request)
         {
-            throw new NotImplementedException();
+            var response = await HttpGetAsync<ApiResponse>
+                ($"https://api.nasa.gov/neo/rest/v1/feed?api_key={ApiKey}" +
+                $"&start_date={request.StartDate:yyyy-MM-dd}&end_date={request.StartDate:yyyy-MM-dd}");
         }
     }
 

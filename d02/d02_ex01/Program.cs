@@ -19,6 +19,7 @@ try
     configs.Add(new JsonSource(jsonConfigFile, jsonConfigPriority));
     configs.Add(new YamlSource(yamlConfigFile, yamlConfigPriority));
     configuration = new Configuration(configs);
+    configuration.PrintConfig();
 }
 catch
 {
@@ -26,4 +27,3 @@ catch
     return;
 }
 
-configuration.PrintConfig();
