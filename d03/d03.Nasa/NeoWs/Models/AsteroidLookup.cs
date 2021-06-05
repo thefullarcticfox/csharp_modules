@@ -6,7 +6,7 @@ namespace d03.Nasa.NeoWs.Models
     public class AsteroidLookup
     {
         [JsonPropertyName("neo_reference_id")]
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }

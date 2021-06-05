@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace d03.Nasa.NeoWs.Models
@@ -6,7 +8,7 @@ namespace d03.Nasa.NeoWs.Models
     public class AsteroidInfo
     {
         [JsonPropertyName("id")]
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         public double Kilometers => CloseApproachData[0].MissDistance.Kilometers;
 
@@ -22,7 +24,25 @@ namespace d03.Nasa.NeoWs.Models
 
     public class MissDistance
     {
-        [JsonPropertyName("kilometers")]
+        [JsonPropertyName("kilometers"), JsonConverter(typeof(StringToDoubleConverter))]
         public double Kilometers { get; set; }
+    }
+
+    public class StringToDoubleConverter : JsonConverter<object>
+    {
+        public override bool CanConvert(Type typeToConvert) =>
+            typeof(double) == typeToConvert;
+
+        public override object Read(ref Utf8JsonReader reader,
+            Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.Number)
+                return reader.GetDouble();
+            return double.Parse(reader.GetString() ?? string.Empty);
+        }
+
+        public override void Write(Utf8JsonWriter writer,
+            object value, JsonSerializerOptions options) =>
+            writer.WriteStringValue(value.ToString());
     }
 }

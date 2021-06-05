@@ -29,7 +29,7 @@ namespace d03.Nasa.Apod.Models
     {
         public override string Read(ref Utf8JsonReader reader,
             Type typeToConvert, JsonSerializerOptions options) =>
-            reader.GetString().Replace("\r", "");
+            reader.GetString()?.Replace("\r", "");
 
         public override void Write(Utf8JsonWriter writer,
             string value, JsonSerializerOptions options) =>
