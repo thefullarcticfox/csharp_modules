@@ -16,7 +16,7 @@ namespace d02_ex01.Configuration
 
             Params = new Hashtable();
             foreach (IConfigurationSource src in sortedSrcs)
-                foreach (DictionaryEntry param in src.Params)
+                foreach (DictionaryEntry param in src.Deserialize())
                     Params[param.Key] = param.Value;
         }
 

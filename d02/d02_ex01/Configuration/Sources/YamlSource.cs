@@ -14,9 +14,13 @@ namespace d02_ex01.Configuration.Sources
         {
             _configPath = configPath;
             Priority = priority;
+        }
+
+        public Hashtable Deserialize()
+        {
             IDeserializer deserializer = new DeserializerBuilder().Build();
             string yamlText = File.ReadAllText(_configPath);
-            Params = deserializer.Deserialize<Hashtable>(yamlText);
+            return deserializer.Deserialize<Hashtable>(yamlText);
         }
     }
 }

@@ -14,8 +14,12 @@ namespace d02_ex01.Configuration.Sources
         {
             _configPath = configPath;
             Priority = priority;
+        }
+
+        public Hashtable Deserialize()
+        {
             string jsonText = File.ReadAllText(_configPath);
-            Params = JsonSerializer.Deserialize<Hashtable>(jsonText);
+            return JsonSerializer.Deserialize<Hashtable>(jsonText);
         }
     }
 }
