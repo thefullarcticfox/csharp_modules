@@ -10,7 +10,7 @@ namespace d03.Nasa.Apod
         public async Task<MediaOfToday[]> GetAsync(int count)
         {
             MediaOfToday[] res = await HttpGetAsync<MediaOfToday[]>(
-                $"https://api.nasa.gov/planetary/apod?count={count}");
+                $"https://api.nasa.gov/planetary/apod?count={count}&api_key={ApiKey}");
             return res;
         }
     }

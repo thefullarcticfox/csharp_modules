@@ -18,7 +18,8 @@ namespace d03.Nasa.NeoWs
             var response = await HttpGetAsync<ApiResponse>(
                 $"{ApiUrl}/feed" +
                 $"?start_date={request.StartDate:yyyy-MM-dd}" +
-                $"&end_date={request.EndDate:yyyy-MM-dd}");
+                $"&end_date={request.EndDate:yyyy-MM-dd}" +
+                $"&api_key={ApiKey}");
 
             List<AsteroidInfo> asteroids = response.NearEarthObjects
                 .SelectMany(asteroid => asteroid.Value)
@@ -27,7 +28,7 @@ namespace d03.Nasa.NeoWs
                 .ToList();
 
             return await Task.WhenAll(asteroids.Select(asteroid =>
-                HttpGetAsync<AsteroidLookup>($"{ApiUrl}/neo/{asteroid.Id}?")));
+                HttpGetAsync<AsteroidLookup>($"{ApiUrl}/neo/{asteroid.Id}?api_key={ApiKey}")));
         }
     }
 
