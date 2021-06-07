@@ -18,6 +18,7 @@ namespace d03.Nasa
 
         protected async Task<T> HttpGetAsync<T>(string url)
         {
+            url += $"&api_key={ApiKey}";
             using HttpResponseMessage response = await _httpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
