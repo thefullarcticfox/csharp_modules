@@ -9,11 +9,7 @@ namespace d03.Nasa.Apod
 
         public ApodClient(string apiKey) : base(apiKey) { }
 
-        public async Task<MediaOfToday[]> GetAsync(int count)
-        {
-            MediaOfToday[] res = await HttpGetAsync<MediaOfToday[]>(
-                $"{ApiUrl}?count={count}&api_key={ApiKey}");
-            return res;
-        }
+        public async Task<MediaOfToday[]> GetAsync(int count) =>
+            await HttpGetAsync<MediaOfToday[]>($"{ApiUrl}?count={count}&api_key={ApiKey}");
     }
 }
