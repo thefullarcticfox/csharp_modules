@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace d04_ex03
 {
-    class TypeFactory
+    public static class TypeFactory
     {
         public static T CreateWithConstructor<T>() where T : class
         {

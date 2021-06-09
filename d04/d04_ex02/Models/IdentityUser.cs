@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using d04_ex02.Attributes;
 
 namespace d04_ex02.Models
@@ -11,13 +10,13 @@ namespace d04_ex02.Models
 
         public IdentityUser(string userName) : this() => UserName = userName;
 
-        [Required, Description("User name"), DefaultValue("Me")]
+        [Description("User name"), DefaultValue("Me")]
         public virtual string UserName { get; set; }
 
         [NoDisplay]
         public virtual string NormalizedUserName { get; set; }
 
-        [Required, Description("Email address"), DefaultValue("test@test")]
+        [Description("Email address"), DefaultValue("test@test")]
         public virtual string Email { get; set; }
 
         [NoDisplay]
@@ -34,7 +33,7 @@ namespace d04_ex02.Models
 
         public virtual string ConcurrencyStamp() => Guid.NewGuid().ToString();
 
-        [Required, Description("Phone number"), DefaultValue("1234567890")]
+        [Description("Phone number"), DefaultValue("1234567890")]
         public virtual string PhoneNumber { get; set; }
 
         [NoDisplay]

@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace d04_ex00
 {
-    class Program
+    internal static class Program
     {
-        static void Main()
+        public static void Main()
         {
             Type type = typeof(DefaultHttpContext);
             Console.WriteLine($"Type: {type.FullName}");
@@ -15,26 +15,31 @@ namespace d04_ex00
             Console.WriteLine($"Based on: {type.BaseType}");
             Console.WriteLine();
 
-            Console.WriteLine($"Fields:");
-            var flags =
-                BindingFlags.DeclaredOnly |
-                BindingFlags.Instance |
-                BindingFlags.Static |
-                BindingFlags.Public |
-                BindingFlags.NonPublic;
-            foreach (FieldInfo field in type.GetFields(flags))
+            const BindingFlags fieldFlags = BindingFlags.Instance |
+                                            BindingFlags.Static |
+                                            BindingFlags.Public |
+                                            BindingFlags.NonPublic;
+            const BindingFlags otherFlags = BindingFlags.Instance |
+                                            BindingFlags.Static |
+                                            BindingFlags.Public;
+
+            Console.WriteLine("Fields:");
+            foreach (FieldInfo field in type.GetFields(fieldFlags))
                 Console.WriteLine($"{field.FieldType} {field.Name}");
             Console.WriteLine();
-            
-            Console.WriteLine($"Properties:");
-            foreach (PropertyInfo property in type.GetProperties())
+
+            Console.WriteLine("Properties:");
+            foreach (PropertyInfo property in type.GetProperties(otherFlags))
                 Console.WriteLine($"{property.PropertyType} {property.Name}");
             Console.WriteLine();
-            
-            Console.WriteLine($"Methods:");
-            foreach (MethodInfo method in type.GetMethods(flags))
-                Console.WriteLine($"{method.ReturnType.Name} {method.Name} " +
-                    $"({string.Join(",", method.GetParameters().Select(p => $"{p.ParameterType.Name} {p.Name}"))})");
+
+            Console.WriteLine("Methods:");
+            foreach (MethodInfo method in type.GetMethods(otherFlags))
+            {
+                string arguments = string.Join(", ",
+                    method.GetParameters().Select(p => $"{p.ParameterType.Name} {p.Name}"));
+                Console.WriteLine($"{method.ReturnType.Name} {method.Name} ({arguments})");
+            }
         }
     }
 }

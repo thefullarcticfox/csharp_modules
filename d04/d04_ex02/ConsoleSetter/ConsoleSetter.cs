@@ -7,7 +7,7 @@ using d04_ex02.Attributes;
 
 namespace d04_ex02.ConsoleSetter
 {
-    public class ConsoleSetter
+    public static class ConsoleSetter
     {
         public static void SetValues<T>(T input) where T : class
         {
@@ -16,12 +16,11 @@ namespace d04_ex02.ConsoleSetter
             IEnumerable<PropertyInfo> requiredProps = typeof(T)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where(p => !Attribute.IsDefined(p, typeof(NoDisplayAttribute)));
-                // .Where(p => Attribute.IsDefined(p.GetType().Assembly, typeof(RequiredAttribute)));
 
             foreach (PropertyInfo property in requiredProps)
             {
                 var descriptionAttr = (DescriptionAttribute)Attribute.GetCustomAttribute(property, typeof(DescriptionAttribute));
-                
+
                 Console.WriteLine($"Set {descriptionAttr?.Description ?? property.Name}:");
                 string value = Console.ReadLine();
 
@@ -31,12 +30,12 @@ namespace d04_ex02.ConsoleSetter
                     property.SetValue(input, defaultValueAttr?.Value ?? string.Empty);
                     continue;
                 }
-                
+
                 property.SetValue(input, value);
             }
 
             Console.WriteLine();
-            Console.WriteLine($"We've set our instance!");
+            Console.WriteLine("We've set our instance!");
             Console.WriteLine($"{input}");
         }
     }

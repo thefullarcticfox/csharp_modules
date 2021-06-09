@@ -3,9 +3,9 @@ using d04_ex03.Models;
 
 namespace d04_ex03
 {
-    class Program
+    internal static class Program
     {
-        static void Main()
+        public static void Main()
         {
             Console.WriteLine(typeof(IdentityUser));
             var user1 = TypeFactory.CreateWithConstructor<IdentityUser>();
@@ -20,7 +20,7 @@ namespace d04_ex03
             Console.WriteLine();
             Console.WriteLine(typeof(IdentityUser));
             Console.WriteLine("Set name:");
-            string[] args = new string[] { Console.ReadLine() };
+            object[] args = { Console.ReadLine() };
             var user = TypeFactory.CreateWithParameters<IdentityUser>(args);
             Console.WriteLine($"Username set: {user.UserName}");
         }
