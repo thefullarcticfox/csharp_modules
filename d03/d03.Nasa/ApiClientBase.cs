@@ -1,6 +1,5 @@
-﻿using System.IO;
-using System.Net.Http;
-using System.Text.Json;
+﻿using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace d03.Nasa
@@ -20,10 +19,7 @@ namespace d03.Nasa
         {
             using HttpResponseMessage response = await _httpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
-            {
-                using Task<Stream> streamTask = response.Content.ReadAsStreamAsync();
-                return await JsonSerializer.DeserializeAsync<T>(await streamTask);
-            }
+                return await response.Content.ReadFromJsonAsync<T>();
 
             string content = await response.Content.ReadAsStringAsync();
             throw new HttpRequestException($"GET \"{url}\" returned {response.StatusCode}:\n{content}");
