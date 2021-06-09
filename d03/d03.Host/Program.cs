@@ -47,9 +47,8 @@ namespace d03.Host
                 }
                 else
                 {
-                    if (!DateTime.TryParse(_config["NeoWs:StartDate"], out DateTime startDate) ||
-                        !DateTime.TryParse(_config["NeoWs:EndDate"], out DateTime endDate))
-                        throw new ArgumentException($"Invalid dates in {ConfigFile}");
+                    string startDate = _config["NeoWs:StartDate"];
+                    string endDate = _config["NeoWs:EndDate"];
 
                     AsteroidRequest request;
                     if (args.Length < 2 || !int.TryParse(args[1], out int count))

@@ -14,5 +14,13 @@ namespace d03.Nasa.NeoWs.Models
             StartDate = startDate;
             ResultCount = count;
         }
+
+        public AsteroidRequest(string startDate, string endDate, int count = int.MaxValue)
+        {
+            if (!DateTime.TryParse(startDate, out StartDate) ||
+                !DateTime.TryParse(endDate, out EndDate))
+                throw new ArgumentException($"Invalid dates");
+            ResultCount = count;
+        }
     }
 }
