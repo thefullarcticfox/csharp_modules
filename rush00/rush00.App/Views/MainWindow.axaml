@@ -7,6 +7,5 @@
         x:Class="rush00.App.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="{Binding Title}"
-		Content="{Binding Content}"
-		Background="Black">
+		Content="{Binding Content}">
 </Window>
