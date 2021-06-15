@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             xmlns:vm="using:rush00.App.ViewModels"
+			 x:Class="rush00.App.Views.HabitCreateView">
+
+	<StackPanel Spacing="10" Margin="10">
+		<Label Content="Set a habit to track:"/>
+		<TextBox Text="{Binding Title}"/>
+		<Label Content="What would be a motivation:"/>
+		<TextBox Text="{Binding Motivation}"/>
+		<Label Content="When will you start:"/>
+		<DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}"/>
+		<Label Content="How many days you want to challenge yourself for:"/>
+		<NumericUpDown Value="{Binding DaysCount}"/>
+		<Button Content="Let's start" Command="{Binding BeginHabit}"/>
+	</StackPanel>
+
+</UserControl>
