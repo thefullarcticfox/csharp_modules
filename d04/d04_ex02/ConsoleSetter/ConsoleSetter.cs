@@ -15,7 +15,7 @@ namespace d04_ex02.ConsoleSetter
 
             IEnumerable<PropertyInfo> requiredProps = typeof(T)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => !Attribute.IsDefined(p, typeof(NoDisplayAttribute)));
+                .Where(p => !p.IsDefined(typeof(NoDisplayAttribute)));
 
             foreach (PropertyInfo property in requiredProps)
             {

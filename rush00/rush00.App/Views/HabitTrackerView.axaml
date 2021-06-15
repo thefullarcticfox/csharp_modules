@@ -7,11 +7,19 @@
              x:Class="rush00.App.Views.HabitTrackerView">
 
 	<StackPanel Margin="10">
+		<ListBox Items="{Binding HabitChecks, Mode=TwoWay}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" IsThreeState="False"
+							  Content="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
 		<ItemsControl Items="{Binding HabitChecks, Mode=TwoWay}">
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}"
-							  Content="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}"/>
+					<CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" IsThreeState="False"
+							  Content="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>
