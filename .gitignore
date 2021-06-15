@@ -5,6 +5,8 @@
 
 # User-specific files
 .DS_Store
+habits.db
+launchSettings.json
 *.rsuser
 *.suo
 *.user
@@ -387,4 +389,3 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
-d03/d03.Host/Properties/launchSettings.json
