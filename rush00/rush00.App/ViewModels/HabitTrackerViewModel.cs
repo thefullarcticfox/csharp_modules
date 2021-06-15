@@ -1,6 +1,10 @@
+using ReactiveUI;
 using rush00.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reactive;
+using System.Threading.Tasks;
 
 namespace rush00.App.ViewModels
 {
@@ -8,9 +12,15 @@ namespace rush00.App.ViewModels
     {
         public HabitTrackerViewModel(IEnumerable<HabitCheck> habitChecks)
         {
-            Checks = new ObservableCollection<HabitCheck>(habitChecks);
+            HabitChecks = new ObservableCollection<HabitCheck>(habitChecks);
+            HabitChecks.CollectionChanged += HabitChecks_CollectionChanged;
         }
 
-        public ObservableCollection<HabitCheck> Checks { get; }
+        private void HabitChecks_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ObservableCollection<HabitCheck> HabitChecks { get; }
     }
 }

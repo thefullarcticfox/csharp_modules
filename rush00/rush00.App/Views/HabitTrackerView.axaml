@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
              xmlns:vm="using:rush00.App.ViewModels"
-			 x:Class="rush00.App.Views.HabitTrackerView">
+             x:Class="rush00.App.Views.HabitTrackerView">
 
 	<StackPanel Margin="10">
-		<ItemsControl Items="{Binding Checks}">
+		<ItemsControl Items="{Binding HabitChecks, Mode=TwoWay}">
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
-					<CheckBox IsChecked="{Binding IsChecked}"
-							  Content="{Binding Date}"/>
+					<CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}"
+							  Content="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}}"/>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>

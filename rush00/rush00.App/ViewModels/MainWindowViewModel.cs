@@ -1,15 +1,17 @@
+using System;
+using System.Linq;
+using System.Reactive.Linq;
 using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 using rush00.Data;
-using System.Linq;
-using System.Reactive.Linq;
 
 namespace rush00.App.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private ViewModelBase? _content;
-        private HabitDbContext? _dbContext;
+        private readonly HabitDbContext? _dbContext;
+        private Data.Models.Habit? _currentHabit;
 
         public string Title { get; private set; }
 
@@ -23,12 +25,30 @@ namespace rush00.App.ViewModels
         {
             Title = "";
             _dbContext = new HabitDbContext();
-            var habit = _dbContext.Habits
+            _currentHabit = _dbContext.Habits
                 .Include(x => x.HabitChecks)
                 .FirstOrDefault(x => !x.IsFinished);
 
-            if (habit == null)
+            if (_currentHabit == null)
                 CreateHabit();
+            else
+                TrackHabit();
+        }
+
+        public void TrackHabit()
+        {
+            if (_currentHabit == null)
+            {
+                _currentHabit = _dbContext?.Habits
+                    .Include(x => x.HabitChecks)
+                    .FirstOrDefault(x => !x.IsFinished);
+            }
+            if (_currentHabit != null)
+            {
+                Title = _currentHabit.Title;
+                var vm = new HabitTrackerViewModel(_currentHabit.HabitChecks);
+                Content = vm;
+            }
         }
 
         public void CreateHabit()
@@ -36,15 +56,22 @@ namespace rush00.App.ViewModels
             Title = "Set new habit to track";
             var vm = new HabitCreateViewModel();
             Content = vm;
-/*            vm.BeginHabit
-                .Subscribe(model =>
+            vm.BeginHabit.Take(1).Subscribe(model =>
+            {
+                if (_dbContext != null)
                 {
-                    _db.Habits.Add(model);
-
-                    var dates = new DateTimeOffset(vm.StartDate);
-                    for (int i = 0; i < vm.DaysCount; i++)
-                        _db.HabitChecks.Add(new Data.Models.HabitCheck {  });
-                });*/
+                    _dbContext.Habits.Add(model);
+                    _dbContext.HabitChecks.AddRange(
+                        Enumerable.Range(0, vm.DaysCount)
+                        .Select(offset => new Data.Models.HabitCheck {
+                            Date = vm.StartDate.Date.AddDays(offset),
+                            Habit = model,
+                            IsChecked = false})
+                        .ToList());
+                    _dbContext.SaveChanges();
+                    TrackHabit();
+                }
+            });
         }
     }
 }

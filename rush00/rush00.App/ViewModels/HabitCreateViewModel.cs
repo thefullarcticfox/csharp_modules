@@ -10,7 +10,7 @@ namespace rush00.App.ViewModels
     {
         private string _title;
         private string _motivation;
-        private DateTimeOffset? _startDate;
+        private DateTimeOffset _startDate;
         private int _daysCount;
 
         public string Title
@@ -25,7 +25,7 @@ namespace rush00.App.ViewModels
             set => this.RaiseAndSetIfChanged(ref _motivation, value);
         }
 
-        public DateTimeOffset? StartDate
+        public DateTimeOffset StartDate
         {
             get => _startDate;
             set => this.RaiseAndSetIfChanged(ref _startDate, value);
