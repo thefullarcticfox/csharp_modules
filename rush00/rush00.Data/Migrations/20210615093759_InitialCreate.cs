@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace rush00.Data.Migrations
 {
-    public partial class InitDb : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,36 +11,36 @@ namespace rush00.Data.Migrations
                 name: "Habits",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                    HabitId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
-                    Motivation = table.Column<string>(type: "TEXT", nullable: true),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Motivation = table.Column<string>(type: "TEXT", nullable: false),
                     IsFinished = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Habits", x => x.Id);
+                    table.PrimaryKey("PK_Habits", x => x.HabitId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "HabitChecks",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                    HabitCheckId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IsChecked = table.Column<bool>(type: "INTEGER", nullable: false),
                     Date = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    HabitId = table.Column<long>(type: "INTEGER", nullable: true)
+                    IsChecked = table.Column<bool>(type: "INTEGER", nullable: false),
+                    HabitId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HabitChecks", x => x.Id);
+                    table.PrimaryKey("PK_HabitChecks", x => x.HabitCheckId);
                     table.ForeignKey(
                         name: "FK_HabitChecks_Habits_HabitId",
                         column: x => x.HabitId,
                         principalTable: "Habits",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "HabitId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

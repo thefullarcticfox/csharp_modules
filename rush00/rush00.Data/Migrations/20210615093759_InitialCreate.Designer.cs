@@ -9,8 +9,8 @@ using rush00.Data;
 namespace rush00.Data.Migrations
 {
     [DbContext(typeof(HabitDbContext))]
-    [Migration("20210615001703_InitDb")]
-    partial class InitDb
+    [Migration("20210615093759_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace rush00.Data.Migrations
 
             modelBuilder.Entity("rush00.Data.Models.Habit", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("HabitId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -28,32 +28,34 @@ namespace rush00.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Motivation")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("HabitId");
 
                     b.ToTable("Habits");
                 });
 
             modelBuilder.Entity("rush00.Data.Models.HabitCheck", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("HabitCheckId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<long?>("HabitId")
+                    b.Property<int>("HabitId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsChecked")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("HabitCheckId");
 
                     b.HasIndex("HabitId");
 
@@ -64,7 +66,9 @@ namespace rush00.Data.Migrations
                 {
                     b.HasOne("rush00.Data.Models.Habit", "Habit")
                         .WithMany("HabitChecks")
-                        .HasForeignKey("HabitId");
+                        .HasForeignKey("HabitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Habit");
                 });

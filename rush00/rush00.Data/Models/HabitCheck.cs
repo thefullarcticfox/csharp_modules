@@ -5,13 +5,14 @@ namespace rush00.Data.Models
 {
     public class HabitCheck
     {
-        [Key, Required, System.ComponentModel.Description("Unique identifier")]
-        public long Id { get; set; }
-        
-        public bool IsChecked { get; set; }
-        
+        [Key, Required]
+        public int HabitCheckId { get; set; }
+        [Required]
         public DateTimeOffset Date { get; set; }
+        [Required]
+        public bool IsChecked { get; set; }
 
-        public virtual Habit Habit { get; set; }
+        public int HabitId { get; set; }
+        public Habit Habit { get; set; }
     }
 }

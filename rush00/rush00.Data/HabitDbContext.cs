@@ -10,14 +10,7 @@ namespace rush00.Data
 
         public HabitDbContext() { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Filename=habits.db");
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
+        protected override void OnConfiguring(DbContextOptionsBuilder options) =>
+            options.UseSqlite("Filename=habits.db");
     }
 }
