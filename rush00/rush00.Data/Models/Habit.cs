@@ -6,7 +6,7 @@ namespace rush00.Data.Models
     public class Habit
     {
         [Key, Required]
-        public int HabitId { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

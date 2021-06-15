@@ -2,27 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:rush00.Data.Models;assembly=rush00.Data"
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
-             xmlns:vm="using:rush00.App.ViewModels"
              x:Class="rush00.App.Views.HabitTrackerView">
 
-	<StackPanel Margin="10">
-		<ListBox Items="{Binding HabitChecks, Mode=TwoWay}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" IsThreeState="False"
-							  Content="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		<ItemsControl Items="{Binding HabitChecks, Mode=TwoWay}">
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" IsThreeState="False"
-							  Content="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-	</StackPanel>
+	<ListBox Items="{Binding HabitChecks, Mode=TwoWay}">
+		<ListBox.ItemTemplate>
+			<DataTemplate DataType="models:HabitCheck">
+				<CheckBox IsChecked="{Binding IsChecked}" IsThreeState="False"
+						  Content="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"
+						  Checked="ToggleButton_OnChecked"
+						  Unchecked="ToggleButton_OnUnchecked"/>
+			</DataTemplate>
+		</ListBox.ItemTemplate>
+	</ListBox>
 
 </UserControl>

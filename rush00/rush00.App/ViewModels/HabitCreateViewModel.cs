@@ -1,6 +1,5 @@
 using System;
 using System.Reactive;
-using Avalonia.Controls;
 using ReactiveUI;
 using rush00.Data.Models;
 
@@ -44,7 +43,7 @@ namespace rush00.App.ViewModels
             _startDate = DateTimeOffset.Now;
             _daysCount = 0;
 
-            var startEnabled = this.WhenAnyValue(
+            IObservable<bool>? startEnabled = this.WhenAnyValue(
                 x => x.Title, x => x.Motivation, x => x.DaysCount,
                 (x, y, z) =>
                 !string.IsNullOrWhiteSpace(x) &&

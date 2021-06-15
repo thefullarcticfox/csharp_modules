@@ -6,7 +6,7 @@ namespace rush00.Data.Models
     public class HabitCheck
     {
         [Key, Required]
-        public int HabitCheckId { get; set; }
+        public int Id { get; set; }
         [Required]
         public DateTimeOffset Date { get; set; }
         [Required]

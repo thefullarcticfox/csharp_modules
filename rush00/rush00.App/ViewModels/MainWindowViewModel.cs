@@ -4,14 +4,13 @@ using System.Reactive.Linq;
 using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 using rush00.Data;
+using rush00.Data.Models;
 
 namespace rush00.App.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private ViewModelBase? _content;
-        private readonly HabitDbContext? _dbContext;
-        private Data.Models.Habit? _currentHabit;
 
         public string Title { get; private set; }
 
@@ -24,54 +23,71 @@ namespace rush00.App.ViewModels
         public MainWindowViewModel()
         {
             Title = "";
-            _dbContext = new HabitDbContext();
-            _currentHabit = _dbContext.Habits
-                .Include(x => x.HabitChecks)
-                .FirstOrDefault(x => !x.IsFinished);
-
-            if (_currentHabit == null)
-                CreateHabit();
-            else
-                TrackHabit();
+            TrackHabit();
         }
 
         public void TrackHabit()
         {
-            if (_currentHabit == null)
+            using var dbCtx = new HabitDbContext();
+
+            Habit? currentHabit = dbCtx.Habits
+                .Include(x => x.HabitChecks)
+                .FirstOrDefault(x => !x.IsFinished);
+
+            if (currentHabit == null)
             {
-                _currentHabit = _dbContext?.Habits
-                    .Include(x => x.HabitChecks)
-                    .FirstOrDefault(x => !x.IsFinished);
+                CreateHabit();
+                return;
             }
-            if (_currentHabit != null)
-            {
-                Title = _currentHabit.Title;
-                var vm = new HabitTrackerViewModel(_currentHabit.HabitChecks);
-                Content = vm;
-            }
+
+            Title = currentHabit.Title;
+            Content = new HabitTrackerViewModel(currentHabit.HabitChecks.OrderBy(x => x.Date));
         }
 
         public void CreateHabit()
         {
             Title = "Set new habit to track";
             var vm = new HabitCreateViewModel();
-            Content = vm;
             vm.BeginHabit.Take(1).Subscribe(model =>
             {
-                if (_dbContext != null)
+                using (var dbCtx = new HabitDbContext())
                 {
-                    _dbContext.Habits.Add(model);
-                    _dbContext.HabitChecks.AddRange(
+                    dbCtx.Habits.Add(model);
+                    dbCtx.HabitChecks.AddRange(
                         Enumerable.Range(0, vm.DaysCount)
-                        .Select(offset => new Data.Models.HabitCheck {
+                        .Select(offset => new HabitCheck
+                        {
                             Date = vm.StartDate.Date.AddDays(offset),
                             Habit = model,
-                            IsChecked = false})
+                            IsChecked = false
+                        })
                         .ToList());
-                    _dbContext.SaveChanges();
-                    TrackHabit();
+                    dbCtx.SaveChanges();
                 }
+                TrackHabit();
             });
+            Content = vm;
+        }
+
+        public void CongratsOnHabit()
+        {
+            using var dbCtx = new HabitDbContext();
+
+            Habit? finishedHabit = dbCtx.Habits
+                .Include(x => x.HabitChecks)
+                .OrderBy(x => x.Id)
+                .LastOrDefault(x => x.IsFinished);
+
+            if (finishedHabit == null)
+            {
+                TrackHabit();
+                return;
+            }
+
+            Title = finishedHabit.Title;
+            var vm = new HabitFinishViewModel(finishedHabit);
+            vm.CreateNew.Take(1).Subscribe(_ => CreateHabit());
+            Content = vm;
         }
     }
 }

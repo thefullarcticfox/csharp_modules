@@ -11,7 +11,7 @@ namespace rush00.Data.Migrations
                 name: "Habits",
                 columns: table => new
                 {
-                    HabitId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Motivation = table.Column<string>(type: "TEXT", nullable: false),
@@ -19,14 +19,14 @@ namespace rush00.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Habits", x => x.HabitId);
+                    table.PrimaryKey("PK_Habits", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "HabitChecks",
                 columns: table => new
                 {
-                    HabitCheckId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Date = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     IsChecked = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -34,12 +34,12 @@ namespace rush00.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HabitChecks", x => x.HabitCheckId);
+                    table.PrimaryKey("PK_HabitChecks", x => x.Id);
                     table.ForeignKey(
                         name: "FK_HabitChecks_Habits_HabitId",
                         column: x => x.HabitId,
                         principalTable: "Habits",
-                        principalColumn: "HabitId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

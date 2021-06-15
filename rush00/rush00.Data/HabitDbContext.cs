@@ -8,8 +8,6 @@ namespace rush00.Data
         public DbSet<Habit> Habits { get; set; }
         public DbSet<HabitCheck> HabitChecks { get; set; }
 
-        public HabitDbContext() { }
-
         protected override void OnConfiguring(DbContextOptionsBuilder options) =>
             options.UseSqlite("Filename=habits.db");
     }

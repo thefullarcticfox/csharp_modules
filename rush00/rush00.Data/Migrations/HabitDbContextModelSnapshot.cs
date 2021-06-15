@@ -18,7 +18,7 @@ namespace rush00.Data.Migrations
 
             modelBuilder.Entity("rush00.Data.Models.Habit", b =>
                 {
-                    b.Property<int>("HabitId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -33,14 +33,14 @@ namespace rush00.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("HabitId");
+                    b.HasKey("Id");
 
                     b.ToTable("Habits");
                 });
 
             modelBuilder.Entity("rush00.Data.Models.HabitCheck", b =>
                 {
-                    b.Property<int>("HabitCheckId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -53,7 +53,7 @@ namespace rush00.Data.Migrations
                     b.Property<bool>("IsChecked")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("HabitCheckId");
+                    b.HasKey("Id");
 
                     b.HasIndex("HabitId");
 
