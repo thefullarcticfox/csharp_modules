@@ -9,6 +9,7 @@ namespace rush00.App.Views
         public MainWindow()
         {
             InitializeComponent();
+            Width = 400;
 #if DEBUG
             this.AttachDevTools();
 #endif

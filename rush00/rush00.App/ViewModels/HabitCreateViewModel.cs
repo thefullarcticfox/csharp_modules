@@ -53,8 +53,8 @@ namespace rush00.App.ViewModels
             BeginHabit = ReactiveCommand.Create(
                 () => new Habit
                 {
-                    Title = Title,
-                    Motivation = Motivation,
+                    Title = Title.Trim(),
+                    Motivation = Motivation.Trim(),
                     IsFinished = false
                 },
                 startEnabled);

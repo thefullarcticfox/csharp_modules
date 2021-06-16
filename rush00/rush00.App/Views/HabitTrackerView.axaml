@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:rush00.Data.Models;assembly=rush00.Data"
-             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
              x:Class="rush00.App.Views.HabitTrackerView">
 
 	<ListBox Items="{Binding HabitChecks, Mode=TwoWay}">
