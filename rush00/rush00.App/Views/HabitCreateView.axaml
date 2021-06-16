@@ -14,7 +14,7 @@
 		<DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}"/>
 		<Label Content="How many days you want to challenge yourself for:"/>
 		<NumericUpDown Value="{Binding DaysCount}"/>
-		<Button Content="Let's start" Command="{Binding BeginHabit}"/>
+		<Button Content="Let's start" Command="{Binding BeginHabit}" IsDefault="True"/>
 	</StackPanel>
 
 </UserControl>
