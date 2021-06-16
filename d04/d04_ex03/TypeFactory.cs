@@ -7,12 +7,8 @@ namespace d04_ex03
     {
         public static T CreateWithConstructor<T>() where T : class
         {
-            ConstructorInfo ctorInfo = typeof(T)
-                .GetConstructor(
-                    BindingFlags.Instance | BindingFlags.Public,
-                    null, CallingConventions.HasThis, Array.Empty<Type>(), null
-                );
-            return (T)ctorInfo?.Invoke(Array.Empty<object>());
+            ConstructorInfo ctorInfo = typeof(T).GetConstructor(Type.EmptyTypes);
+            return (T)ctorInfo?.Invoke(null);
         }
 
         public static T CreateWithActivator<T>() where T : class =>
