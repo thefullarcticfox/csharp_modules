@@ -4,7 +4,7 @@ namespace d04_ex02
 {
     internal static class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var idUser = new IdentityUser();
             ConsoleSetter.ConsoleSetter.SetValues(idUser);
