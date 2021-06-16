@@ -10,9 +10,14 @@ namespace rush00.App.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private string _title;
         private ViewModelBase? _content;
 
-        public string Title { get; private set; }
+        public string Title
+        {
+            get => _title;
+            private set => this.RaiseAndSetIfChanged(ref _title, value);
+        }
 
         public ViewModelBase? Content
         {
@@ -22,7 +27,7 @@ namespace rush00.App.ViewModels
 
         public MainWindowViewModel()
         {
-            Title = "";
+            _title = "";
             TrackHabit();
         }
 
