@@ -25,18 +25,22 @@ namespace d00_5.Models
             int i = 0;
             while (IsOpen)
             {
-                Customer customer = customers[i % customers.Count];
+                Customer customer = customers[i];
                 Storage.ProductCount -= customer.FillCart(Storage.ProductCount < 7 ? Storage.ProductCount : 7);
+
                 CashRegister cashRegister;
                 if (chooseLeastProductsQueue)
                     cashRegister = customer.GetLeastProductsCashRegister(CashRegisters);
                 else
                     cashRegister = customer.GetLeastQueueCashRegister(CashRegisters);
+
                 Console.WriteLine($"{customer} chose {cashRegister}");
+
                 cashRegister
                     .CustomerQueue
                     .Enqueue(customer);
-                i++;
+
+                i = (i + 1) % customers.Count;
             }
         }
     }
