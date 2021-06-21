@@ -25,14 +25,14 @@ namespace d00_5.Models
             return CartProductCount;
         }
 
-        public override string ToString() => $"{Id} {Name} has {CartProductCount} products in cart";
+        public override string ToString() => $"{Name} (number {Id}) with {CartProductCount} products in cart";
 
         public override bool Equals(object obj) => obj is Customer customer && this == customer;
 
         public override int GetHashCode() => Tuple.Create(Name, Id).GetHashCode();
 
-        public static bool operator==(Customer c1, Customer c2) => c1.Name == c2.Name && c1.Id == c2.Id;
+        public static bool operator ==(Customer c1, Customer c2) => c1.Name == c2.Name && c1.Id == c2.Id;
 
-        public static bool operator!=(Customer c1, Customer c2) => !(c1 == c2);
+        public static bool operator !=(Customer c1, Customer c2) => !(c1 == c2);
     }
 }

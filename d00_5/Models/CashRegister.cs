@@ -15,7 +15,7 @@ namespace d00_5.Models
             CustomerQueue = new Queue<Customer>();
         }
 
-        public override string ToString() => $"CashRegister {Title}";
+        public override string ToString() => $"\"{Title}\" with {CustomerQueue.Count} customers in queue";
 
         public override bool Equals(object obj) => obj is CashRegister cr && this == cr;
 

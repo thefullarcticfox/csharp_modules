@@ -20,17 +20,22 @@ namespace d00_5.Models
             Storage = new Storage(storageFill);
         }
 
-        public void WorkForCustomers(List<Customer> customers)
+        public void WorkForCustomers(List<Customer> customers, bool chooseLeastProductsQueue = false)
         {
             int i = 0;
             while (IsOpen)
             {
                 Customer customer = customers[i % customers.Count];
                 Storage.ProductCount -= customer.FillCart(Storage.ProductCount < 7 ? Storage.ProductCount : 7);
-                customer.GetLeastQueueCashRegister(CashRegisters)
+                CashRegister cashRegister;
+                if (chooseLeastProductsQueue)
+                    cashRegister = customer.GetLeastProductsCashRegister(CashRegisters);
+                else
+                    cashRegister = customer.GetLeastQueueCashRegister(CashRegisters);
+                Console.WriteLine($"{customer} chose {cashRegister}");
+                cashRegister
                     .CustomerQueue
                     .Enqueue(customer);
-                Console.WriteLine(customer);
                 i++;
             }
         }
