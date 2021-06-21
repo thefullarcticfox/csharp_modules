@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace d00_5.Models
 {
@@ -15,7 +16,9 @@ namespace d00_5.Models
             CustomerQueue = new Queue<Customer>();
         }
 
-        public override string ToString() => $"\"{Title}\" with {CustomerQueue.Count} customers in queue";
+        public override string ToString() =>
+            $"\"{Title}\" with {CustomerQueue.Count} customers " +
+            $"with {CustomerQueue.Sum(c => c.CartProductCount)} products in queue";
 
         public override bool Equals(object obj) => obj is CashRegister cr && this == cr;
 
