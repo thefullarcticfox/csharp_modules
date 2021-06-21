@@ -6,6 +6,6 @@
 
         public Storage(int productCount) => ProductCount = productCount;
 
-        public bool IsEmpty() => ProductCount <= 0;
+        public bool IsEmpty() => ProductCount == 0;
     }
 }

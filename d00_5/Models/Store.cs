@@ -26,7 +26,7 @@ namespace d00_5.Models
             while (IsOpen)
             {
                 Customer customer = customers[i % customers.Count];
-                Storage.ProductCount -= customer.FillCart(7);
+                Storage.ProductCount -= customer.FillCart(Storage.ProductCount < 7 ? Storage.ProductCount : 7);
                 customer.GetLeastQueueCashRegister(CashRegisters)
                     .CustomerQueue
                     .Enqueue(customer);
