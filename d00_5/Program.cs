@@ -10,9 +10,15 @@ namespace d00_5
         private static List<Customer> GetCustomers() =>
             new()
             {
-                new Customer("Andrew", 1), new Customer("Axel", 2), new Customer("Bob", 3),
-                new Customer("Duke", 4), new Customer("Eugene", 5), new Customer("Makoto", 6),
-                new Customer("Otto", 7), new Customer("Spenser", 8), new Customer("Takemi", 9),
+                new Customer("Andrew", 1),
+                new Customer("Axel", 2),
+                new Customer("Bob", 3),
+                new Customer("Duke", 4),
+                new Customer("Eugene", 5),
+                new Customer("Makoto", 6),
+                new Customer("Otto", 7),
+                new Customer("Spenser", 8),
+                new Customer("Takemi", 9),
                 new Customer("Zeke", 10)
             };
 
