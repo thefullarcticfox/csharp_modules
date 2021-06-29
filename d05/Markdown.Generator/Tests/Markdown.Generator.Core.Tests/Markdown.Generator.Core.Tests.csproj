@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Markdown.Generator\Markdown.Generator.Application\Markdown.Generator.Application.csproj" />
-    <ProjectReference Include="..\..\Markdown.Generator\Markdown.Generator.Core\Markdown.Generator.Core.csproj" />
+    <ProjectReference Include="..\..\Markdown.Generator.Application\Markdown.Generator.Application.csproj" />
+    <ProjectReference Include="..\..\Markdown.Generator.Core\Markdown.Generator.Core.csproj" />
   </ItemGroup>
 
 </Project>
