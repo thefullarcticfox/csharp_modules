@@ -48,7 +48,7 @@ namespace Markdown.Generator.Core.Tests
 
             PropertyInfo[] actual = mdType.GetProperties();
 
-            Assert.False(actual.Where(prop => prop.PropertyType.IsNestedPrivate).Any());
+            Assert.False(actual.Where(prop => prop.PropertyType.IsNotPublic).Any());
         }
     }
 }
