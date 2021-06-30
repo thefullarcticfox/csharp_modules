@@ -15,9 +15,9 @@ namespace Markdown.Generator.Core.Markdown.Elements
         
         public override string Create()
         {
-            Builder.Append("```");
+            Builder.Append("`");
             Builder.Append(_code);
-            Builder.Append("```");
+            Builder.Append("`");
 
             return Builder.ToString();
         }
