@@ -8,7 +8,7 @@ namespace Markdown.Generator.Core.Tests
     public class MarkdownBuilderTests
     {
         [Fact]
-        public void Given_MarkdownBuilder_When_CodeQuoteMethodCalled_Then_ContainsSingleCodeQuote()
+        public void Given_MarkdownBuilder_When_CodeQuoteMethodCalled_Then_ContainsSingleCodeQuoteObject()
         {
             var expected = new CodeQuote("code");
             var builder = new MarkdownBuilder();
@@ -20,7 +20,7 @@ namespace Markdown.Generator.Core.Tests
         }
 
         [Fact]
-        public void Given_MarkdownBuilder_When_CodeMethodCalled_Then_ContainsSingleCodeQuote()
+        public void Given_MarkdownBuilder_When_CodeMethodCalled_Then_ContainsSingleCodeObject()
         {
             var expected = new Code("csharp", "code");
             var builder = new MarkdownBuilder();
@@ -32,7 +32,7 @@ namespace Markdown.Generator.Core.Tests
         }
 
         [Fact]
-        public void Given_MarkdownBuilder_When_LinkMethodCalled_Then_ContainsSingleCodeQuote()
+        public void Given_MarkdownBuilder_When_LinkMethodCalled_Then_ContainsSingleLinkObject()
         {
             var expected = new Link("title", "url");
             var builder = new MarkdownBuilder();
@@ -44,7 +44,7 @@ namespace Markdown.Generator.Core.Tests
         }
 
         [Fact]
-        public void Given_MarkdownBuilder_When_HeaderMethodCalled_Then_ContainsSingleCodeQuote()
+        public void Given_MarkdownBuilder_When_HeaderMethodCalled_Then_ContainsSingleHeaderObject()
         {
             var expected = new Header(2, "header");
             var builder = new MarkdownBuilder();
