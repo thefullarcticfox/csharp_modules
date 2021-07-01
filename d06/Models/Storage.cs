@@ -1,24 +1,15 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 
 namespace d06.Models
 {
     public class Storage
     {
-        private long _itemsInStorage;
+        private int _itemsInStorage;
 
         public int ItemsInStorage
         {
-            get
-            {
-                //Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} is reading");
-                return (int)Interlocked.Read(ref _itemsInStorage);
-            }
-            set
-            {
-                //Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} is writing");
-                Interlocked.Exchange(ref _itemsInStorage, value);
-            }
+            get => Interlocked.CompareExchange(ref _itemsInStorage, 0, 0);
+            set => Interlocked.Exchange(ref _itemsInStorage, value);
         }
 
         public bool IsEmpty => ItemsInStorage <= 0;

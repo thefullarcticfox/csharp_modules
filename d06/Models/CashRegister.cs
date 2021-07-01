@@ -33,14 +33,14 @@ namespace d06.Models
         private void ThreadedProcess()
         {
             Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) started");
-            for (var i = 0; i < QueuedCustomers.Count; i++)
+            while (QueuedCustomers.Count > 0)
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
                 Customer customer = QueuedCustomers.Dequeue();
 
-                for (var j = 0; j < customer.ItemsInCart; j++)
+                for (var i = 0; i < customer.ItemsInCart; i++)
                     Thread.Sleep(TimePerItem);  // time to process item
 
                 _store.Storage.ItemsInStorage -= (customer.ItemsInCart <= _store.Storage.ItemsInStorage
@@ -50,16 +50,14 @@ namespace d06.Models
                 Console.WriteLine($"Customer#{customer.No} served by CashRegister#{No} in {stopwatch.Elapsed.TotalSeconds:N2}s");
 
                 if (QueuedCustomers.Count > 0)
-                {
-                    // Console.WriteLine($"Next customer waits {Delay} in CashRegister#{No}");
                     Thread.Sleep(Delay);        // delay between customers
-                }
 
                 TotalTime += stopwatch.Elapsed;
                 stopwatch.Stop();
             }
 
             Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) finished in {TotalTime.TotalSeconds:N2}s");
+            Console.WriteLine(_store.Storage.ItemsInStorage);
         }
 
         public void Process()
