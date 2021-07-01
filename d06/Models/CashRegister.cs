@@ -43,7 +43,7 @@ namespace d06.Models
                 for (var j = 0; j < customer.ItemsInCart; j++)
                     Thread.Sleep(TimePerItem);  // time to process item
 
-                _store.Storage.Take(customer.ItemsInCart <= _store.Storage.ItemsInStorage
+                _store.Storage.ItemsInStorage -= (customer.ItemsInCart <= _store.Storage.ItemsInStorage
                     ? customer.ItemsInCart
                     : _store.Storage.ItemsInStorage);
 

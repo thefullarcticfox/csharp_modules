@@ -54,10 +54,10 @@ namespace d06
 
                 customer.FillCart(cartCapacity);
 
-                //if (customer.ItemsInCart <= store.Storage.ItemsInStorage)
-                //    store.Storage.ItemsInStorage -= customer.ItemsInCart;
-                //else
-                //    store.Storage.ItemsInStorage = 0;
+                /*if (customer.ItemsInCart <= store.Storage.ItemsInStorage)
+                    store.Storage.ItemsInStorage -= customer.ItemsInCart;
+                else
+                    store.Storage.ItemsInStorage = 0;*/
 
                 CashRegister register = customer.GetInLineByPeople(store.Registers);
                 Console.WriteLine($"{customer} to {register}");
