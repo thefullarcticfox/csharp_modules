@@ -1,20 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace d06.Models
 {
     public class Store
     {
-        public List<Register> Registers { get; }
+        public List<CashRegister> Registers { get; }
         public Storage Storage { get; }
 
         public bool IsOpen => !Storage.IsEmpty;
 
-        public Store(int registerCount, int storageCapacity)
+        public Store(int registerCount, int storageCapacity, TimeSpan timePerItem, TimeSpan delay)
         {
             Storage = new Storage(storageCapacity);
             Registers = Enumerable.Range(1, registerCount)
-                .Select(i => new Register(i))
+                .Select(i => new CashRegister(i, timePerItem, delay))
                 .ToList();
         }
     }

@@ -6,9 +6,9 @@ namespace d06.Extensions
 {
     public static class CustomerExtensions
     {
-        public static Register GetInLineByPeople(this Customer customer, IEnumerable<Register> registers)
+        public static CashRegister GetInLineByPeople(this Customer customer, IEnumerable<CashRegister> registers)
         {
-            Register register = registers
+            CashRegister register = registers
                 .OrderBy(x => x.QueuedCustomers.Count)
                 .FirstOrDefault();
 
@@ -17,9 +17,9 @@ namespace d06.Extensions
             return register;
         }
 
-        public static Register GetInLineByItems(this Customer customer, IEnumerable<Register> registers)
+        public static CashRegister GetInLineByItems(this Customer customer, IEnumerable<CashRegister> registers)
         {
-            Register register = registers
+            CashRegister register = registers
                 .OrderBy(x => x.QueuedCustomers.Sum(c => c.ItemsInCart))
                 .FirstOrDefault();
 

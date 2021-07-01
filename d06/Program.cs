@@ -19,7 +19,7 @@ namespace d06
                     .Select(x => new Customer(x))
                     .ToArray();
 
-                var shop = new Store(registerCount, storageCapacity);
+                var shop = new Store(registerCount, storageCapacity, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5));
 
                 Console.WriteLine("Lines by people count:");
 
@@ -35,7 +35,7 @@ namespace d06
                     else
                         shop.Storage.ItemsInStorage = 0;
 
-                    Register register = customer.GetInLineByPeople(shop.Registers);
+                    CashRegister register = customer.GetInLineByPeople(shop.Registers);
                     Console.WriteLine($"{customer} to {register}");
                 }
             }
@@ -45,7 +45,7 @@ namespace d06
                     .Select(x => new Customer(x))
                     .ToArray();
 
-                var shop = new Store(registerCount, storageCapacity);
+                var shop = new Store(registerCount, storageCapacity, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5));
 
                 Console.WriteLine("Lines by items count:");
 
@@ -61,7 +61,7 @@ namespace d06
                     else
                         shop.Storage.ItemsInStorage = 0;
 
-                    Register register = customer.GetInLineByItems(shop.Registers);
+                    CashRegister register = customer.GetInLineByItems(shop.Registers);
                     Console.WriteLine($"{customer} to {register}");
                 }
             }
