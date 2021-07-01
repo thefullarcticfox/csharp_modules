@@ -23,6 +23,8 @@ namespace d06.Models
         {
             foreach (var register in Registers)
                 register.Thread.Start();
+            foreach (var register in Registers)
+                register.Thread.Join();
         }
     }
 }
