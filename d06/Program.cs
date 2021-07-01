@@ -59,8 +59,7 @@ namespace d06
             }
 
             Console.WriteLine($"Main thread id: {Thread.CurrentThread.ManagedThreadId}");
-            foreach (var register in store.Registers)
-                register.Process();
+            store.OpenRegisters();
         }
     }
 }

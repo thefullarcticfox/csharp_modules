@@ -18,5 +18,11 @@ namespace d06.Models
                 .Select(i => new CashRegister(this, i, timePerItem, delay))
                 .ToList();
         }
+
+        public void OpenRegisters()
+        {
+            foreach (var register in Registers)
+                register.Process();
+        }
     }
 }

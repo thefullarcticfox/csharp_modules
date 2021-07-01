@@ -47,7 +47,7 @@ namespace d06.Models
                     ? customer.ItemsInCart
                     : _store.Storage.ItemsInStorage);
 
-                Console.WriteLine($"Customer#{customer.No} served by CashRegister#{No} in {stopwatch.Elapsed.TotalSeconds:N2}s");
+                Console.WriteLine($"{customer} served by {this} in {stopwatch.Elapsed.TotalSeconds:N2}s");
 
                 if (QueuedCustomers.Count > 0)
                     Thread.Sleep(Delay);        // delay between customers
@@ -57,7 +57,7 @@ namespace d06.Models
             }
 
             Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) finished in {TotalTime.TotalSeconds:N2}s");
-            Console.WriteLine(_store.Storage.ItemsInStorage);
+            //Console.WriteLine(_store.Storage.ItemsInStorage);
         }
 
         public void Process()
