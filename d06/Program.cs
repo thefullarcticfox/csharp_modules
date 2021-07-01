@@ -14,8 +14,8 @@ namespace d06
 
         private static void Main()
         {
-            const int registerCount = 3;
-            const int storageCapacity = 40;
+            const int registerCount = 4;
+            const int storageCapacity = 50;
             const int cartCapacity = 7;
             const int customerCount = 20;
 
