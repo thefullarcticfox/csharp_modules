@@ -10,22 +10,27 @@ namespace d06.Models
         private int No { get; }
         public ConcurrentQueue<Customer> QueuedCustomers { get; }
         private TimeSpan TimePerItem { get; }
-        private TimeSpan Delay { get; }
+        private TimeSpan TimePerCustomer { get; }
         private int TotalCustomers { get; set; }
         private TimeSpan TotalTime { get; set; }
         public Thread Thread { get; }
 
         private readonly Store _store;
 
-        public CashRegister(Store store, int number, TimeSpan timePerItem, TimeSpan delay)
+        public CashRegister(Store store, int number, TimeSpan timePerItem, TimeSpan timePerCustomer)
         {
             No = number;
             QueuedCustomers = new ConcurrentQueue<Customer>();
             TimePerItem = timePerItem;
-            Delay = delay;
+            TimePerCustomer = timePerCustomer;
             TotalTime = new TimeSpan(0, 0, 0);
             _store = store;
             Thread = new Thread(Process) { Name = $"CashRegister#{No}" };
+
+            // bonus
+            /*var rnd = new Random();
+            TimePerItem = TimeSpan.FromSeconds(rnd.NextDouble() * Math.Abs(timePerItem.TotalSeconds - 1.0) + 1.0);
+            TimePerCustomer = TimeSpan.FromSeconds(rnd.NextDouble() * Math.Abs(timePerCustomer.TotalSeconds - 1.0) + 1.0);*/
         }
 
         private void Process()
@@ -48,7 +53,7 @@ namespace d06.Models
                 Console.WriteLine($"{customer} served by {this} in {stopwatch.Elapsed.TotalSeconds:N2}s");
 
                 if (!_store.IsOpen)
-                    Thread.Sleep(Delay);        // delay between customers
+                    Thread.Sleep(TimePerCustomer);        // delay between customers
 
                 stopwatch.Stop();
                 TotalTime += stopwatch.Elapsed;
