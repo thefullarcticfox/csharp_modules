@@ -21,10 +21,8 @@ namespace d06.Models
 
         public void OpenRegisters()
         {
-            foreach (var register in Registers)
+            foreach (CashRegister register in Registers)
                 register.Thread.Start();
-            foreach (var register in Registers)
-                register.Thread.Join();
         }
     }
 }

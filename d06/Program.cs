@@ -17,7 +17,7 @@ namespace d06
             const int registerCount = 4;
             const int storageCapacity = 50;
             const int cartCapacity = 7;
-            const int customerCount = 20;
+            var customerCount = 10;
 
             double timePerItem;
             double timePerCustomer;
@@ -55,6 +55,18 @@ namespace d06
 
             Console.WriteLine($"Main thread id: {Thread.CurrentThread.ManagedThreadId}");
             store.OpenRegisters();
+
+            while (store.IsOpen)
+            {
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+                var customer = new Customer(++customerCount);
+                customer.FillCart(cartCapacity);
+                CashRegister register = customer.GetInLineByItems(store.Registers);
+                Console.WriteLine($"{customer} to {register}");
+            }
+
+            foreach (CashRegister register in store.Registers)
+                register.Thread.Join();
         }
     }
 }

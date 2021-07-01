@@ -11,6 +11,7 @@ namespace d06.Models
         public ConcurrentQueue<Customer> QueuedCustomers { get; }
         private TimeSpan TimePerItem { get; }
         private TimeSpan Delay { get; }
+        private int TotalCustomers { get; set; }
         private TimeSpan TotalTime { get; set; }
         public Thread Thread { get; }
 
@@ -27,16 +28,16 @@ namespace d06.Models
             Thread = new Thread(Process) { Name = $"CashRegister#{No}" };
         }
 
-        public void Process()
+        private void Process()
         {
             Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) started");
-            while (!QueuedCustomers.IsEmpty && _store.IsOpen)
+            while (_store.IsOpen)
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
                 if (!QueuedCustomers.TryDequeue(out Customer customer))
-                    throw new Exception("Could not retrieve customer from queue");
+                    continue;
 
                 Thread.Sleep(TimePerItem * customer.ItemsInCart);  // time to process item
 
@@ -46,15 +47,15 @@ namespace d06.Models
 
                 Console.WriteLine($"{customer} served by {this} in {stopwatch.Elapsed.TotalSeconds:N2}s");
 
-                if (!QueuedCustomers.IsEmpty || !_store.IsOpen)
+                if (!_store.IsOpen)
                     Thread.Sleep(Delay);        // delay between customers
 
                 stopwatch.Stop();
                 TotalTime += stopwatch.Elapsed;
+                TotalCustomers++;
             }
 
-            Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) finished in {TotalTime.TotalSeconds:N2}s");
-            //Console.WriteLine(_store.Storage.ItemsInStorage);
+            Console.WriteLine($"CashRegister#{No} load was {TotalTime.TotalSeconds:N2}s (mean wait time was {TotalTime.TotalSeconds / TotalCustomers:N2})");
         }
 
         public override string ToString() =>
