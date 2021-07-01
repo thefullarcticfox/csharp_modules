@@ -21,20 +21,23 @@ namespace d06.Models
             QueuedCustomers = new Queue<Customer>();
             TimePerItem = timePerItem;
             Delay = delay;
-            _thread = new Thread(new ThreadStart(ThreadedProcess));
+            _thread = new Thread(new ThreadStart(ThreadedProcess))
+            {
+                Name = $"CashRegister#{No}"
+            };
         }
 
         private void ThreadedProcess()
         {
             Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) started");
-            for (int i = 0; i < QueuedCustomers.Count; i++)
+            for (var i = 0; i < QueuedCustomers.Count; i++)
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
                 Customer current = QueuedCustomers.Dequeue();
 
-                for (int j = 0; j < current.ItemsInCart; j++)
+                for (var j = 0; j < current.ItemsInCart; j++)
                     Thread.Sleep(TimePerItem);  // time to process item
                 Console.WriteLine($"Customer#{current.No} served by CashRegister#{No} in {stopwatch.Elapsed.TotalSeconds:N2}s");
 

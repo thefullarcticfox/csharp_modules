@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using d06.Extensions;
 using d06.Models;
 using Microsoft.Extensions.Configuration;
@@ -62,7 +63,8 @@ namespace d06
                 Console.WriteLine($"{customer} to {register}");
             }
 
-            foreach (var register in store.Registers)
+            Console.WriteLine($"Main thread id: {Thread.CurrentThread.ManagedThreadId}");
+            foreach (CashRegister register in store.Registers)
                 register.Process();
         }
     }
