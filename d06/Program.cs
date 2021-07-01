@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using d06.Extensions;
 using d06.Models;
 using Microsoft.Extensions.Configuration;
@@ -46,17 +47,12 @@ namespace d06
                 TimeSpan.FromSeconds(delay));
 
             Console.WriteLine("Lines by people count:");
-
-            var i = 0;
-            while (store.IsOpen && i < customerCount)
+            Parallel.ForEach(customers, customer =>
             {
-                Customer customer = customers[i++];
-
                 customer.FillCart(cartCapacity);
-
                 CashRegister register = customer.GetInLineByPeople(store.Registers);
                 Console.WriteLine($"{customer} to {register}");
-            }
+            });
 
             Console.WriteLine($"Main thread id: {Thread.CurrentThread.ManagedThreadId}");
             store.OpenRegisters();
