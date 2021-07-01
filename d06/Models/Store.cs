@@ -22,7 +22,7 @@ namespace d06.Models
         public void OpenRegisters()
         {
             foreach (var register in Registers)
-                register.Process();
+                register.Thread.Start();
         }
     }
 }

@@ -12,9 +12,9 @@ namespace d06.Models
         private TimeSpan TimePerItem { get; }
         private TimeSpan Delay { get; }
         private TimeSpan TotalTime { get; set; }
+        public Thread Thread { get; }
 
         private readonly Store _store;
-        private readonly Thread _thread;
 
         public CashRegister(Store store, int number, TimeSpan timePerItem, TimeSpan delay)
         {
@@ -24,16 +24,13 @@ namespace d06.Models
             Delay = delay;
             TotalTime = new TimeSpan(0, 0, 0);
             _store = store;
-            _thread = new Thread(ThreadedProcess)
-            {
-                Name = $"CashRegister#{No}"
-            };
+            Thread = new Thread(Process) { Name = $"CashRegister#{No}" };
         }
 
-        private void ThreadedProcess()
+        public void Process()
         {
             Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) started");
-            while (QueuedCustomers.Count > 0)
+            while (QueuedCustomers.Count > 0 && _store.IsOpen)
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
@@ -41,8 +38,7 @@ namespace d06.Models
                 if (!QueuedCustomers.TryDequeue(out Customer customer))
                     throw new Exception("Could not retrieve customer from queue");
 
-                for (var i = 0; i < customer.ItemsInCart; i++)
-                    Thread.Sleep(TimePerItem);  // time to process item
+                Thread.Sleep(TimePerItem * customer.ItemsInCart);  // time to process item
 
                 _store.Storage.ItemsInStorage -= (customer.ItemsInCart <= _store.Storage.ItemsInStorage
                     ? customer.ItemsInCart
@@ -53,17 +49,12 @@ namespace d06.Models
                 if (QueuedCustomers.Count > 0)
                     Thread.Sleep(Delay);        // delay between customers
 
-                TotalTime += stopwatch.Elapsed;
                 stopwatch.Stop();
+                TotalTime += stopwatch.Elapsed;
             }
 
             Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) finished in {TotalTime.TotalSeconds:N2}s");
             //Console.WriteLine(_store.Storage.ItemsInStorage);
-        }
-
-        public void Process()
-        {
-            _thread.Start();
         }
 
         public override string ToString() =>
