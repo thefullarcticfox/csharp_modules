@@ -34,65 +34,36 @@ namespace d06
                 return;
             }
 
+            Customer[] customers = Enumerable.Range(1, customerCount)
+                .Select(x => new Customer(x))
+                .ToArray();
+
+            var store = new Store(
+                registerCount,
+                storageCapacity,
+                TimeSpan.FromSeconds(timePerItem),
+                TimeSpan.FromSeconds(delay));
+
+            Console.WriteLine("Lines by people count:");
+
+            var i = 0;
+            while (store.IsOpen && i < customerCount)
             {
-                Customer[] customers = Enumerable.Range(1, customerCount)
-                    .Select(x => new Customer(x))
-                    .ToArray();
+                Customer customer = customers[i++];
 
-                var shop = new Store(
-                    registerCount,
-                    storageCapacity,
-                    TimeSpan.FromSeconds(timePerItem),
-                    TimeSpan.FromSeconds(delay));
+                customer.FillCart(cartCapacity);
 
-                Console.WriteLine("Lines by people count:");
+                if (customer.ItemsInCart <= store.Storage.ItemsInStorage)
+                    store.Storage.ItemsInStorage -= customer.ItemsInCart;
+                else
+                    store.Storage.ItemsInStorage = 0;
 
-                var i = 0;
-                while (shop.IsOpen && i < customerCount)
-                {
-                    Customer customer = customers[i++];
-
-                    customer.FillCart(cartCapacity);
-
-                    if (customer.ItemsInCart <= shop.Storage.ItemsInStorage)
-                        shop.Storage.ItemsInStorage -= customer.ItemsInCart;
-                    else
-                        shop.Storage.ItemsInStorage = 0;
-
-                    CashRegister register = customer.GetInLineByPeople(shop.Registers);
-                    Console.WriteLine($"{customer} to {register}");
-                }
+                CashRegister register = customer.GetInLineByPeople(store.Registers);
+                Console.WriteLine($"{customer} to {register}");
             }
 
-            {
-                Customer[] customers = Enumerable.Range(1, customerCount)
-                    .Select(x => new Customer(x))
-                    .ToArray();
-
-                var shop = new Store(
-                    registerCount,
-                    storageCapacity,
-                    TimeSpan.FromSeconds(timePerItem),
-                    TimeSpan.FromSeconds(delay));
-
-                Console.WriteLine("Lines by items count:");
-
-                var i = 0;
-                while (shop.IsOpen && i < customerCount)
-                {
-                    Customer customer = customers[i++];
-
-                    customer.FillCart(cartCapacity);
-
-                    if (customer.ItemsInCart <= shop.Storage.ItemsInStorage)
-                        shop.Storage.ItemsInStorage -= customer.ItemsInCart;
-                    else
-                        shop.Storage.ItemsInStorage = 0;
-
-                    CashRegister register = customer.GetInLineByItems(shop.Registers);
-                    Console.WriteLine($"{customer} to {register}");
-                }
-            }
+            foreach (var register in store.Registers)
+                register.Process();
         }
     }
 }
