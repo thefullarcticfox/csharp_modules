@@ -7,21 +7,24 @@ namespace d06.Models
 {
     public class CashRegister
     {
-        public int No { get; }
+        private int No { get; }
         public Queue<Customer> QueuedCustomers { get; }
-        public TimeSpan TimePerItem { get; }
-        public TimeSpan Delay { get; }
-        public TimeSpan TotalTime { get; private set; }
+        private TimeSpan TimePerItem { get; }
+        private TimeSpan Delay { get; }
+        private TimeSpan TotalTime { get; set; }
 
-        private Thread _thread;
+        private readonly Store _store;
+        private readonly Thread _thread;
 
-        public CashRegister(int number, TimeSpan timePerItem, TimeSpan delay)
+        public CashRegister(Store store, int number, TimeSpan timePerItem, TimeSpan delay)
         {
             No = number;
             QueuedCustomers = new Queue<Customer>();
             TimePerItem = timePerItem;
             Delay = delay;
-            _thread = new Thread(new ThreadStart(ThreadedProcess))
+            TotalTime = new TimeSpan(0, 0, 0);
+            _store = store;
+            _thread = new Thread(ThreadedProcess)
             {
                 Name = $"CashRegister#{No}"
             };
@@ -35,11 +38,16 @@ namespace d06.Models
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
-                Customer current = QueuedCustomers.Dequeue();
+                Customer customer = QueuedCustomers.Dequeue();
 
-                for (var j = 0; j < current.ItemsInCart; j++)
+                for (var j = 0; j < customer.ItemsInCart; j++)
                     Thread.Sleep(TimePerItem);  // time to process item
-                Console.WriteLine($"Customer#{current.No} served by CashRegister#{No} in {stopwatch.Elapsed.TotalSeconds:N2}s");
+
+                _store.Storage.Take(customer.ItemsInCart <= _store.Storage.ItemsInStorage
+                    ? customer.ItemsInCart
+                    : _store.Storage.ItemsInStorage);
+
+                Console.WriteLine($"Customer#{customer.No} served by CashRegister#{No} in {stopwatch.Elapsed.TotalSeconds:N2}s");
 
                 if (QueuedCustomers.Count > 0)
                 {

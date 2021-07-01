@@ -15,7 +15,7 @@ namespace d06.Models
         {
             Storage = new Storage(storageCapacity);
             Registers = Enumerable.Range(1, registerCount)
-                .Select(i => new CashRegister(i, timePerItem, delay))
+                .Select(i => new CashRegister(this, i, timePerItem, delay))
                 .ToList();
         }
     }
