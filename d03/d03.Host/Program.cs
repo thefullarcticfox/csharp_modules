@@ -12,7 +12,6 @@ namespace d03.Host
     internal static class Program
     {
         private const string ConfigFile = "appsettings.json";
-        private static IConfiguration _config;
 
         private static void ThrowOnInvalidInput() =>
             throw new ArgumentException(
@@ -28,10 +27,10 @@ namespace d03.Host
                 if (args.Length < 1 || (args[0] != "apod" && args[0] != "neows"))
                     ThrowOnInvalidInput();
 
-                _config = new ConfigurationBuilder()
+                IConfiguration config = new ConfigurationBuilder()
                     .AddJsonFile(ConfigFile)
                     .Build();
-                string apiKey = _config["ApiKey"];
+                string apiKey = config["ApiKey"];
 
                 if (args[0] == "apod")
                 {
@@ -47,8 +46,8 @@ namespace d03.Host
                 }
                 else
                 {
-                    string startDate = _config["NeoWs:StartDate"];
-                    string endDate = _config["NeoWs:EndDate"];
+                    string startDate = config["NeoWs:StartDate"];
+                    string endDate = config["NeoWs:EndDate"];
 
                     AsteroidRequest request;
                     if (args.Length < 2 || !int.TryParse(args[1], out int count))

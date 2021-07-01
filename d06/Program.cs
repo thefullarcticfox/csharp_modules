@@ -2,11 +2,14 @@
 using System.Linq;
 using d06.Extensions;
 using d06.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace d06
 {
     internal static class Program
     {
+        private const string ConfigFile = "appsettings.json";
+
         private static void Main()
         {
             const int registerCount = 3;
@@ -14,12 +17,33 @@ namespace d06
             const int cartCapacity = 7;
             const int customerCount = 10;
 
+            int timePerItem;
+            int delay;
+            try
+            {
+                IConfiguration config = new ConfigurationBuilder()
+                    .AddJsonFile(ConfigFile)
+                    .Build();
+                timePerItem = int.Parse(config["time_per_item"]);
+                delay = int.Parse(config["delay_after"]);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+
             {
                 Customer[] customers = Enumerable.Range(1, customerCount)
                     .Select(x => new Customer(x))
                     .ToArray();
 
-                var shop = new Store(registerCount, storageCapacity, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5));
+                var shop = new Store(
+                    registerCount,
+                    storageCapacity,
+                    TimeSpan.FromSeconds(timePerItem),
+                    TimeSpan.FromSeconds(delay));
 
                 Console.WriteLine("Lines by people count:");
 
@@ -45,7 +69,11 @@ namespace d06
                     .Select(x => new Customer(x))
                     .ToArray();
 
-                var shop = new Store(registerCount, storageCapacity, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5));
+                var shop = new Store(
+                    registerCount,
+                    storageCapacity,
+                    TimeSpan.FromSeconds(timePerItem),
+                    TimeSpan.FromSeconds(delay));
 
                 Console.WriteLine("Lines by items count:");
 
