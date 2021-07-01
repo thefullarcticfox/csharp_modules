@@ -19,16 +19,15 @@ namespace d06
             const int cartCapacity = 7;
             const int customerCount = 20;
 
-            int timePerItem;
-            int delay;
+            double timePerItem;
+            double timePerCustomer;
             try
             {
                 IConfiguration config = new ConfigurationBuilder()
                     .AddJsonFile(ConfigFile)
                     .Build();
-                timePerItem = int.Parse(config["time_per_item"]);
-                delay = int.Parse(config["delay_after"]);
-
+                timePerItem = double.Parse(config["timePerItem"]);
+                timePerCustomer = double.Parse(config["timePerCustomer"]);
             }
             catch (Exception ex)
             {
@@ -44,7 +43,7 @@ namespace d06
                 registerCount,
                 storageCapacity,
                 TimeSpan.FromSeconds(timePerItem),
-                TimeSpan.FromSeconds(delay));
+                TimeSpan.FromSeconds(timePerCustomer));
 
             Console.WriteLine("Lines by people count:");
             Parallel.ForEach(customers, customer =>
