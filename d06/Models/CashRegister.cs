@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 
@@ -8,7 +8,7 @@ namespace d06.Models
     public class CashRegister
     {
         private int No { get; }
-        public Queue<Customer> QueuedCustomers { get; }
+        public ConcurrentQueue<Customer> QueuedCustomers { get; }
         private TimeSpan TimePerItem { get; }
         private TimeSpan Delay { get; }
         private TimeSpan TotalTime { get; set; }
@@ -19,7 +19,7 @@ namespace d06.Models
         public CashRegister(Store store, int number, TimeSpan timePerItem, TimeSpan delay)
         {
             No = number;
-            QueuedCustomers = new Queue<Customer>();
+            QueuedCustomers = new ConcurrentQueue<Customer>();
             TimePerItem = timePerItem;
             Delay = delay;
             TotalTime = new TimeSpan(0, 0, 0);
@@ -38,7 +38,8 @@ namespace d06.Models
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
-                Customer customer = QueuedCustomers.Dequeue();
+                if (!QueuedCustomers.TryDequeue(out Customer customer))
+                    throw new Exception("Could not retrieve customer from queue");
 
                 for (var i = 0; i < customer.ItemsInCart; i++)
                     Thread.Sleep(TimePerItem);  // time to process item
