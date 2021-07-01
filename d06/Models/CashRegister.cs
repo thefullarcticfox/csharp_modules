@@ -30,7 +30,7 @@ namespace d06.Models
         public void Process()
         {
             Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) started");
-            while (QueuedCustomers.Count > 0 && _store.IsOpen)
+            while (!QueuedCustomers.IsEmpty && _store.IsOpen)
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
@@ -46,7 +46,7 @@ namespace d06.Models
 
                 Console.WriteLine($"{customer} served by {this} in {stopwatch.Elapsed.TotalSeconds:N2}s");
 
-                if (QueuedCustomers.Count > 0)
+                if (!QueuedCustomers.IsEmpty || !_store.IsOpen)
                     Thread.Sleep(Delay);        // delay between customers
 
                 stopwatch.Stop();

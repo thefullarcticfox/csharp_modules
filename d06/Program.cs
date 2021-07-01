@@ -17,7 +17,7 @@ namespace d06
             const int registerCount = 3;
             const int storageCapacity = 40;
             const int cartCapacity = 7;
-            const int customerCount = 10;
+            const int customerCount = 20;
 
             int timePerItem;
             int delay;
