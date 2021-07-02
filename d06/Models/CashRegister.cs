@@ -7,12 +7,13 @@ namespace d06.Models
 {
     public class CashRegister
     {
-        private int No { get; }
+        public int No { get; }
         public ConcurrentQueue<Customer> QueuedCustomers { get; }
         private TimeSpan TimePerItem { get; }
         private TimeSpan TimePerCustomer { get; }
-        private int TotalCustomers { get; set; }
-        private TimeSpan TotalTime { get; set; }
+        public TimeSpan TotalTime { get; private set; }
+        public int TotalCustomers { get; private set; }
+        public TimeSpan MeanWaitTime => TimeSpan.FromSeconds(TotalTime.TotalSeconds / TotalCustomers);
         public Thread Thread { get; }
 
         private readonly Store _store;
@@ -35,7 +36,7 @@ namespace d06.Models
 
         private void Process()
         {
-            Console.WriteLine($"Thread#{Thread.CurrentThread.ManagedThreadId} (CashRegister#{No}) started");
+            Console.WriteLine($"{this} started in Thread#{Thread.CurrentThread.ManagedThreadId}");
             while (_store.IsOpen)
             {
                 var stopwatch = new Stopwatch();
@@ -44,7 +45,7 @@ namespace d06.Models
                 if (!QueuedCustomers.TryDequeue(out Customer customer))
                     continue;
 
-                Thread.Sleep(TimePerItem * customer.ItemsInCart);  // time to process item
+                Thread.Sleep(TimePerItem * customer.ItemsInCart);   // time to process an item
 
                 _store.Storage.ItemsInStorage -= (customer.ItemsInCart <= _store.Storage.ItemsInStorage
                     ? customer.ItemsInCart
@@ -53,14 +54,12 @@ namespace d06.Models
                 Console.WriteLine($"{customer} served by {this} in {stopwatch.Elapsed.TotalSeconds:N2}s");
 
                 if (!_store.IsOpen)
-                    Thread.Sleep(TimePerCustomer);        // delay between customers
+                    Thread.Sleep(TimePerCustomer);                  // delay between customers
 
                 stopwatch.Stop();
                 TotalTime += stopwatch.Elapsed;
                 TotalCustomers++;
             }
-
-            Console.WriteLine($"CashRegister#{No} load was {TotalTime.TotalSeconds:N2}s (mean wait time was {TotalTime.TotalSeconds / TotalCustomers:N2})");
         }
 
         public override string ToString() =>

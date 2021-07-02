@@ -53,7 +53,6 @@ namespace d06
                 Console.WriteLine($"{customer} to {register}");
             });
 
-            Console.WriteLine($"Main thread id: {Thread.CurrentThread.ManagedThreadId}");
             store.OpenRegisters();
 
             while (store.IsOpen)
@@ -65,8 +64,14 @@ namespace d06
                 Console.WriteLine($"{customer} to {register}");
             }
 
-            foreach (CashRegister register in store.Registers)
-                register.Thread.Join();
+            // waiting for all threads to finish
+            foreach (CashRegister reg in store.Registers)
+                reg.Thread.Join();
+
+            // and output the results
+            Console.WriteLine("Register |        Load |   Mean Wait");
+            foreach (CashRegister reg in store.Registers)
+                Console.WriteLine($"#{reg.No,7} | {reg.TotalTime.TotalSeconds,10:N2}s | {reg.MeanWaitTime.TotalSeconds,10:N2}s");
         }
     }
 }
