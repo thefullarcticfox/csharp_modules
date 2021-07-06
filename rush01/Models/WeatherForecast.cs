@@ -1,15 +1,44 @@
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace rush01.Models
 {
     public class WeatherForecast
     {
-        public DateTime Date { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
-        public int TemperatureC { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        [JsonPropertyName("temp_c"), JsonConverter(typeof(DoubleConverter))]
+        public double TemperatureC => TemperatureK - 273.15;
 
-        public string Summary { get; set; }
+        [JsonPropertyName("temp_f"), JsonConverter(typeof(DoubleConverter))]
+        public double TemperatureF => TemperatureC / 0.5556 + 32;
+
+        [JsonPropertyName("temp_k"), JsonConverter(typeof(DoubleConverter))]
+        public double TemperatureK { get; set; }
+
+        [JsonPropertyName("wind"), JsonConverter(typeof(DoubleConverter))]
+        public double Wind { get; set; }
+
+        [JsonPropertyName("pressure")]
+        public int Pressure { get; set; }
+
+        [JsonPropertyName("humidity")]
+        public int Humidity { get; set; }
+    }
+
+    public class DoubleConverter : JsonConverter<double>
+    {
+        public override double Read(ref Utf8JsonReader reader,
+            Type typeToConvert, JsonSerializerOptions options) =>
+            reader.GetDouble();
+
+        public override void Write(Utf8JsonWriter writer,
+            double value, JsonSerializerOptions options) =>
+            writer.WriteNumberValue(Math.Round(value, 2));
     }
 }
