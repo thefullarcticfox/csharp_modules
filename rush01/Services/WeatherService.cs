@@ -6,41 +6,26 @@ using System.Threading.Tasks;
 
 namespace rush01.Services
 {
-    public static class WeatherService
+    public class WeatherService
     {
         private static readonly string _apiUrl = "http://api.openweathermap.org/data/2.5/weather?";
 
-        public static async Task<WeatherForecast> HttpGetAsync(string query)
+        public static async Task<WeatherForecast> GetAsync(string apiKey, double latitude, double longitude) =>
+            await HttpGetAsync($"lat={latitude}&lon={longitude}&appid={apiKey}");
+
+        public static async Task<WeatherForecast> GetAsync(string apiKey, string city) =>
+            await HttpGetAsync($"q={city}&appid={apiKey}");
+
+        private static async Task<WeatherForecast> HttpGetAsync(string query)
         {
             using HttpResponseMessage response = await new HttpClient().GetAsync(_apiUrl + query);
             if (response.IsSuccessStatusCode)
-            {
-                var weather = await response.Content
-                    .ReadFromJsonAsync<OpenWeatherMapResponse>();
-                return new WeatherForecast
-                {
-                    Name = weather.Name,
-                    Description = weather.Description,
-                    TemperatureK = weather.TempKelvin,
-                    Pressure = weather.Pressure,
-                    Humidity = weather.Humidity,
-                    Wind = weather.WindSpeed
-                };
-            }
+                return await response.Content.ReadFromJsonAsync<WeatherForecast>();
 
-            string content = await response.Content.ReadAsStringAsync();
-            JsonDocument jsonDocument = JsonDocument.Parse(content);
+            JsonDocument jsonDocument =
+                JsonDocument.Parse(await response.Content.ReadAsStringAsync());
             string message = "unknown error";
-
-            try
-            {
-                message = jsonDocument.RootElement.GetProperty("message").GetString();
-            }
-            catch
-            {
-                // can be ignored
-            }
-
+            message = jsonDocument.RootElement.GetProperty("message").GetString();
             throw new HttpRequestException(message);
         }
     }

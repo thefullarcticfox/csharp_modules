@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -9,26 +10,38 @@ namespace rush01.Models
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("description")]
-        public string Description { get; set; }
+        [JsonPropertyName("weather")]
+        public List<WeatherInfo> WeatherInfo { get; set; }
 
-        [JsonPropertyName("temp_c"), JsonConverter(typeof(DoubleConverter))]
-        public double TemperatureC => TemperatureK - 273.15;
+        [JsonPropertyName("main")]
+        public MainInfo MainInfo { get; set; }
 
-        [JsonPropertyName("temp_f"), JsonConverter(typeof(DoubleConverter))]
-        public double TemperatureF => TemperatureC / 0.5556 + 32;
+        [JsonPropertyName("wind")]
+        public WindInfo WindInfo { get; set; }
+    }
 
-        [JsonPropertyName("temp_k"), JsonConverter(typeof(DoubleConverter))]
-        public double TemperatureK { get; set; }
-
-        [JsonPropertyName("wind"), JsonConverter(typeof(DoubleConverter))]
-        public double Wind { get; set; }
+    public class MainInfo
+    {
+        [JsonPropertyName("temp")]
+        public double Temp { get; set; }
 
         [JsonPropertyName("pressure")]
         public int Pressure { get; set; }
 
         [JsonPropertyName("humidity")]
         public int Humidity { get; set; }
+    }
+
+    public class WeatherInfo
+    {
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+    }
+
+    public class WindInfo
+    {
+        [JsonPropertyName("speed")]
+        public double Speed { get; set; }
     }
 
     public class DoubleConverter : JsonConverter<double>

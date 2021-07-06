@@ -49,7 +49,7 @@ namespace rush01.Controllers
         {
             try
             {
-                var forecast = await WeatherService.HttpGetAsync($"lat={latitude}&lon={longitude}&appid={_apiKey}");
+                var forecast = await WeatherService.GetAsync(_apiKey, latitude, longitude);
                 return Ok(forecast);
             }
             catch (Exception ex)
@@ -80,13 +80,12 @@ namespace rush01.Controllers
         {
             try
             {
-                var forecast = await WeatherService.HttpGetAsync($"q={city}&appid={_apiKey}");
+                var forecast = await WeatherService.GetAsync(_apiKey, city);
                 return Ok(forecast);
             }
             catch (Exception ex)
             {
-                var problem = new ProblemDetails { Detail = ex.Message };
-                return BadRequest(problem);
+                return BadRequest(new ProblemDetails { Detail = ex.Message });
             }
         }
     }
