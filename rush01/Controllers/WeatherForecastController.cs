@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using rush01.Models;
+using rush01.Services;
 
 namespace rush01.Controllers
 {
@@ -48,9 +49,7 @@ namespace rush01.Controllers
         {
             try
             {
-                var forecast = await HttpGetWeatherAsync(
-                    "http://api.openweathermap.org/data/2.5/weather?" +
-                    $"lat={latitude}&lon={longitude}&appid={_apiKey}");
+                var forecast = await WeatherService.HttpGetAsync($"lat={latitude}&lon={longitude}&appid={_apiKey}");
                 return Ok(forecast);
             }
             catch (Exception ex)
@@ -60,38 +59,35 @@ namespace rush01.Controllers
             }
         }
 
-        private async Task<WeatherForecast> HttpGetWeatherAsync(string url)
+        /// <summary>
+        /// Current weather API provided by OpenWeatherMap
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /weatherforecast/Moscow
+        ///
+        /// </remarks>
+        /// <param name="city"></param>
+        /// <returns>Current weather for provided city</returns>
+        /// <response code="200">Returns current weather</response>
+        /// <response code="400">If something went wrong</response>
+        [HttpGet]
+        [Route("{city}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WeatherForecast))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAsync(string city)
         {
-            using HttpResponseMessage response = await new HttpClient().GetAsync(url);
-            if (response.IsSuccessStatusCode)
-            {
-                var weather = await response.Content
-                    .ReadFromJsonAsync<OpenWeatherMapResponse>();
-                return new WeatherForecast
-                {
-                    Name = weather.Name,
-                    Description = weather.Description,
-                    TemperatureK = weather.TempKelvin,
-                    Pressure = weather.Pressure,
-                    Humidity = weather.Humidity,
-                    Wind = weather.WindSpeed
-                };
-            }
-
-            string content = await response.Content.ReadAsStringAsync();
-            JsonDocument jsonDocument = JsonDocument.Parse(content);
-            string message = "unknown error";
-
             try
             {
-                message = jsonDocument.RootElement.GetProperty("message").GetString();
+                var forecast = await WeatherService.HttpGetAsync($"q={city}&appid={_apiKey}");
+                return Ok(forecast);
             }
-            catch
+            catch (Exception ex)
             {
-                // can be ignored
+                var problem = new ProblemDetails { Detail = ex.Message };
+                return BadRequest(problem);
             }
-
-            throw new HttpRequestException(message);
         }
     }
 }
