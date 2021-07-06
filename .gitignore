@@ -6,7 +6,6 @@
 # User-specific files
 .DS_Store
 habits.db
-launchSettings.json
 *.rsuser
 *.suo
 *.user
