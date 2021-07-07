@@ -46,7 +46,7 @@ namespace rush01.Controllers
         {
             try
             {
-                var forecast = await _weatherService.GetAsync(latitude, longitude);
+                WeatherForecast forecast = await _weatherService.GetAsync(latitude, longitude);
                 return Ok(forecast);
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace rush01.Controllers
         {
             try
             {
-                var forecast = await _weatherService.GetAsync(city);
+                WeatherForecast forecast = await _weatherService.GetAsync(city);
                 return Ok(forecast);
             }
             catch (Exception ex)

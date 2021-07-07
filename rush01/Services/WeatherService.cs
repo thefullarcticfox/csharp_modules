@@ -14,7 +14,7 @@ namespace rush01.Services
 
     public class WeatherService
     {
-        private static readonly string _apiUrl = "http://api.openweathermap.org/data/2.5/weather?";
+        private const string ApiUrl = "https://api.openweathermap.org/data/2.5/weather?";
         private readonly ServiceSettings _settings;
 
         public WeatherService(IOptions<ServiceSettings> options) => _settings = options.Value;
@@ -27,14 +27,13 @@ namespace rush01.Services
 
         private static async Task<WeatherForecast> HttpGetAsync(string query)
         {
-            using HttpResponseMessage response = await new HttpClient().GetAsync(_apiUrl + query);
+            using HttpResponseMessage response = await new HttpClient().GetAsync(ApiUrl + query);
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<WeatherForecast>();
 
             JsonDocument jsonDocument =
                 JsonDocument.Parse(await response.Content.ReadAsStringAsync());
-            string message = "unknown error";
-            message = jsonDocument.RootElement.GetProperty("message").GetString();
+            string message = jsonDocument.RootElement.GetProperty("message").GetString();
             throw new HttpRequestException(message);
         }
     }
