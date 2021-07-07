@@ -75,6 +75,8 @@ namespace rush01.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync(string city)
         {
+            if (string.IsNullOrWhiteSpace(city))
+                return NotFound("City not provided");
             try
             {
                 WeatherForecast forecast = await _weatherService.GetAsync(city);
@@ -84,6 +86,17 @@ namespace rush01.Controllers
             {
                 return BadRequest(new ProblemDetails { Detail = ex.Message });
             }
+        }
+
+        [HttpPost]
+        [Route("{city}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Post(string city)
+        {
+            if (string.IsNullOrWhiteSpace(city))
+                return NotFound("City not provided");
+            return Ok($"{city} is set as default");
         }
     }
 }
