@@ -29,7 +29,39 @@ namespace rush01.WeatherApi.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     GET /weatherforecast?lat=55.7558&amp;lon=37.6173
+        ///     GET /weatherforecast/Moscow
+        ///
+        /// </remarks>
+        /// <param name="city"></param>
+        /// <returns>Current weather for provided city</returns>
+        /// <response code="200">Returns current weather</response>
+        /// <response code="400">If something went wrong</response>
+        [HttpGet]
+        [Route("{city?}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WeatherForecast))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAsync(string city = null)
+        {
+            if (string.IsNullOrWhiteSpace(city) && !_memoryCache.TryGetValue("default_city", out city))
+                return NotFound("City not provided");
+            try
+            {
+                WeatherForecast forecast = await _weatherService.GetAsync(city);
+                return Ok(forecast);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ProblemDetails { Detail = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Current weather API provided by OpenWeatherMap
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /weatherforecast/coords?lat=55.7558&amp;lon=37.6173
         ///
         /// </remarks>
         /// <param name="latitude"></param>
@@ -38,6 +70,7 @@ namespace rush01.WeatherApi.Controllers
         /// <response code="200">Returns current weather</response>
         /// <response code="400">If something went wrong</response>
         [HttpGet]
+        [Route("coords")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WeatherForecast))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync(
@@ -57,37 +90,17 @@ namespace rush01.WeatherApi.Controllers
         }
 
         /// <summary>
-        /// Current weather API provided by OpenWeatherMap
+        /// Set default city for API provided by OpenWeatherMap
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     GET /weatherforecast/Moscow
+        ///     POST /weatherforecast/Moscow
         ///
         /// </remarks>
         /// <param name="city"></param>
-        /// <returns>Current weather for provided city</returns>
-        /// <response code="200">Returns current weather</response>
-        /// <response code="400">If something went wrong</response>
-        [HttpGet]
-        [Route("{city}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WeatherForecast))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAsync(string city)
-        {
-            if (string.IsNullOrWhiteSpace(city) && !_memoryCache.TryGetValue("default_city", out city))
-                return NotFound("City not provided");
-            try
-            {
-                WeatherForecast forecast = await _weatherService.GetAsync(city);
-                return Ok(forecast);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ProblemDetails { Detail = ex.Message });
-            }
-        }
-
+        /// <response code="200">If successfully set</response>
+        /// <response code="400">If city is not provided</response>
         [HttpPost]
         [Route("{city}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
