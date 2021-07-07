@@ -24,7 +24,7 @@ namespace rush01.WeatherApi.Controllers
         }
 
         /// <summary>
-        /// Gets current weather provided by OpenWeatherMap
+        /// Gets current weather provided by OpenWeatherMap (by coordinates)
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -57,7 +57,7 @@ namespace rush01.WeatherApi.Controllers
         }
 
         /// <summary>
-        /// Gets current weather provided by OpenWeatherMap
+        /// Gets current weather provided by OpenWeatherMap (by city name)
         /// </summary>
         /// <remarks>
         /// Sample request:
