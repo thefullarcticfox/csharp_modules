@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace rush01
+namespace rush01.WeatherApi
 {
     public class Program
     {

@@ -7,9 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using rush01.Services;
+using rush01.WeatherClient;
 
-namespace rush01
+namespace rush01.WeatherApi
 {
     public class Startup
     {
@@ -29,7 +29,7 @@ namespace rush01
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "rush01 API",
+                    Title = "rush01 Weather API",
                     Description = "A simple ASP.NET Core Web API for rush01"
                 });
 
@@ -39,6 +39,7 @@ namespace rush01
                 c.IncludeXmlComments(xmlPath);
             });
             services.Configure<ServiceSettings>(Configuration.GetSection(nameof(ServiceSettings)));
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +49,7 @@ namespace rush01
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "rush01 API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "rush01 Weather API v1"));
             }
 
             app.UseRouting();

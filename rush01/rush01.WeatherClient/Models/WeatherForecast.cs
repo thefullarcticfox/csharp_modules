@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace rush01.Models
+namespace rush01.WeatherClient.Models
 {
     public class WeatherForecast
     {

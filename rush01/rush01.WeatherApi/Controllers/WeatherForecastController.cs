@@ -4,22 +4,22 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using rush01.Models;
-using rush01.Services;
+using rush01.WeatherClient;
+using rush01.WeatherClient.Models;
 
-namespace rush01.Controllers
+namespace rush01.WeatherApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly WeatherService _weatherService;
+        private readonly WeatherClient.WeatherClient _weatherService;
         private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(IOptions<ServiceSettings> settings, ILogger<WeatherForecastController> logger)
         {
-            _weatherService = new WeatherService(settings);
+            _weatherService = new WeatherClient.WeatherClient(settings);
             _logger = logger;
         }
 
