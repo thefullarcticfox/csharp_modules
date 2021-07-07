@@ -1,4 +1,5 @@
-﻿using rush01.Models;
+﻿using Microsoft.Extensions.Options;
+using rush01.Models;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -6,15 +7,23 @@ using System.Threading.Tasks;
 
 namespace rush01.Services
 {
+    public class ServiceSettings
+    {
+        public string ApiKey { get; set; }
+    }
+
     public class WeatherService
     {
         private static readonly string _apiUrl = "http://api.openweathermap.org/data/2.5/weather?";
+        private readonly ServiceSettings _settings;
 
-        public static async Task<WeatherForecast> GetAsync(string apiKey, double latitude, double longitude) =>
-            await HttpGetAsync($"lat={latitude}&lon={longitude}&appid={apiKey}");
+        public WeatherService(IOptions<ServiceSettings> options) => _settings = options.Value;
 
-        public static async Task<WeatherForecast> GetAsync(string apiKey, string city) =>
-            await HttpGetAsync($"q={city}&appid={apiKey}");
+        public async Task<WeatherForecast> GetAsync(double latitude, double longitude) =>
+            await HttpGetAsync($"lat={latitude}&lon={longitude}&appid={_settings.ApiKey}");
+
+        public async Task<WeatherForecast> GetAsync(string city) =>
+            await HttpGetAsync($"q={city}&appid={_settings.ApiKey}");
 
         private static async Task<WeatherForecast> HttpGetAsync(string query)
         {

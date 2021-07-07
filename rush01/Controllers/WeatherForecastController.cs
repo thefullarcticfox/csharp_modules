@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using rush01.Models;
 using rush01.Services;
 
@@ -17,12 +14,12 @@ namespace rush01.Controllers
     [Produces("application/json")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly string _apiKey;
+        private readonly WeatherService _weatherService;
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(IConfiguration config, ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(IOptions<ServiceSettings> settings, ILogger<WeatherForecastController> logger)
         {
-            _apiKey = config["OpenWeatherMap:ApiKey"];
+            _weatherService = new WeatherService(settings);
             _logger = logger;
         }
 
@@ -49,7 +46,7 @@ namespace rush01.Controllers
         {
             try
             {
-                var forecast = await WeatherService.GetAsync(_apiKey, latitude, longitude);
+                var forecast = await _weatherService.GetAsync(latitude, longitude);
                 return Ok(forecast);
             }
             catch (Exception ex)
@@ -80,7 +77,7 @@ namespace rush01.Controllers
         {
             try
             {
-                var forecast = await WeatherService.GetAsync(_apiKey, city);
+                var forecast = await _weatherService.GetAsync(city);
                 return Ok(forecast);
             }
             catch (Exception ex)
