@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using rush01.WeatherClient;
 using rush01.WeatherClient.Models;
@@ -15,12 +15,12 @@ namespace rush01.WeatherApi.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly WeatherClient.WeatherClient _weatherService;
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IMemoryCache _memoryCache;
 
-        public WeatherForecastController(IOptions<ServiceSettings> settings, ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(IOptions<ServiceSettings> settings, IMemoryCache memoryCache)
         {
             _weatherService = new WeatherClient.WeatherClient(settings);
-            _logger = logger;
+            _memoryCache = memoryCache;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace rush01.WeatherApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync(string city)
         {
-            if (string.IsNullOrWhiteSpace(city))
+            if (string.IsNullOrWhiteSpace(city) && !_memoryCache.TryGetValue("default_city", out city))
                 return NotFound("City not provided");
             try
             {
@@ -96,7 +96,8 @@ namespace rush01.WeatherApi.Controllers
         {
             if (string.IsNullOrWhiteSpace(city))
                 return NotFound("City not provided");
-            return Ok($"{city} is set as default");
+            _memoryCache.Set("default_city", city);
+            return Ok($"{city} set as default");
         }
     }
 }
