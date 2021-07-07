@@ -17,7 +17,7 @@ namespace rush01.Services
         private const string ApiUrl = "https://api.openweathermap.org/data/2.5/weather?";
         private readonly ServiceSettings _settings;
 
-        public WeatherService(IOptions<ServiceSettings> options) => _settings = options.Value;
+        public WeatherService(IOptions<ServiceSettings> settings) => _settings = settings.Value;
 
         public async Task<WeatherForecast> GetAsync(double latitude, double longitude) =>
             await HttpGetAsync($"lat={latitude}&lon={longitude}&appid={_settings.ApiKey}");
