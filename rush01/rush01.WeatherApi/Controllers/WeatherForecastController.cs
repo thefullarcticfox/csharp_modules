@@ -14,12 +14,12 @@ namespace rush01.WeatherApi.Controllers
     [Produces("application/json")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly WeatherClient.WeatherClient _weatherService;
+        private readonly WeatherClient.WeatherClient _weatherClient;
         private readonly IMemoryCache _memoryCache;
 
         public WeatherForecastController(IOptions<ServiceSettings> settings, IMemoryCache memoryCache)
         {
-            _weatherService = new WeatherClient.WeatherClient(settings);
+            _weatherClient = new WeatherClient.WeatherClient(settings);
             _memoryCache = memoryCache;
         }
 
@@ -47,8 +47,7 @@ namespace rush01.WeatherApi.Controllers
         {
             try
             {
-                WeatherForecast forecast = await _weatherService.GetAsync(latitude, longitude);
-                return Ok(forecast);
+                return Ok(await _weatherClient.GetAsync(latitude, longitude));
             }
             catch (Exception ex)
             {
@@ -80,8 +79,7 @@ namespace rush01.WeatherApi.Controllers
                 return NotFound("City not provided");
             try
             {
-                WeatherForecast forecast = await _weatherService.GetAsync(city);
-                return Ok(forecast);
+                return Ok(await _weatherClient.GetAsync(city));
             }
             catch (Exception ex)
             {
@@ -90,7 +88,7 @@ namespace rush01.WeatherApi.Controllers
         }
 
         /// <summary>
-        /// Set default city for API provided by OpenWeatherMap
+        /// Sets default city for OpenWeatherMap API
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -109,6 +107,7 @@ namespace rush01.WeatherApi.Controllers
         {
             if (string.IsNullOrWhiteSpace(city))
                 return NotFound("City not provided");
+
             _memoryCache.Set("default_city", city);
             return Ok($"{city} set as default");
         }
