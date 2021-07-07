@@ -24,39 +24,7 @@ namespace rush01.WeatherApi.Controllers
         }
 
         /// <summary>
-        /// Current weather API provided by OpenWeatherMap
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     GET /weatherforecast/Moscow
-        ///
-        /// </remarks>
-        /// <param name="city"></param>
-        /// <returns>Current weather for provided city</returns>
-        /// <response code="200">Returns current weather</response>
-        /// <response code="400">If something went wrong</response>
-        [HttpGet]
-        [Route("{city?}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WeatherForecast))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAsync(string city = null)
-        {
-            if (string.IsNullOrWhiteSpace(city) && !_memoryCache.TryGetValue("default_city", out city))
-                return NotFound("City not provided");
-            try
-            {
-                WeatherForecast forecast = await _weatherService.GetAsync(city);
-                return Ok(forecast);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ProblemDetails { Detail = ex.Message });
-            }
-        }
-
-        /// <summary>
-        /// Current weather API provided by OpenWeatherMap
+        /// Gets current weather provided by OpenWeatherMap
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -86,6 +54,38 @@ namespace rush01.WeatherApi.Controllers
             {
                 var problem = new ProblemDetails { Detail = ex.Message };
                 return BadRequest(problem);
+            }
+        }
+
+        /// <summary>
+        /// Gets current weather provided by OpenWeatherMap
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /weatherforecast/Moscow
+        ///
+        /// </remarks>
+        /// <param name="city">Optional if default city is set</param>
+        /// <returns>Current weather for provided city</returns>
+        /// <response code="200">Returns current weather</response>
+        /// <response code="400">If something went wrong</response>
+        [HttpGet]
+        [Route("{city?}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WeatherForecast))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAsync(string city = null)
+        {
+            if (string.IsNullOrWhiteSpace(city) && !_memoryCache.TryGetValue("default_city", out city))
+                return NotFound("City not provided");
+            try
+            {
+                WeatherForecast forecast = await _weatherService.GetAsync(city);
+                return Ok(forecast);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ProblemDetails { Detail = ex.Message });
             }
         }
 
