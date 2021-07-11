@@ -20,10 +20,10 @@ namespace rush01.WeatherClient
         public WeatherClient(IOptions<ServiceSettings> settings) => _settings = settings.Value;
 
         public async Task<WeatherForecast> GetAsync(double latitude, double longitude) =>
-            await HttpGetAsync($"lat={latitude}&lon={longitude}&appid={_settings.ApiKey}");
+            await HttpGetAsync($"lat={latitude}&lon={longitude}&units=metric&appid={_settings.ApiKey}");
 
         public async Task<WeatherForecast> GetAsync(string city) =>
-            await HttpGetAsync($"q={city}&appid={_settings.ApiKey}");
+            await HttpGetAsync($"q={city}&units=metric&appid={_settings.ApiKey}");
 
         private static async Task<WeatherForecast> HttpGetAsync(string query)
         {
